@@ -64,4 +64,17 @@ GitHub repo (`mehmedsuperfoods07-prog/mehmed`), Vercel project, and Supabase pro
 
 ## Commands
 
-_To be filled in once the repo is scaffolded (package.json scripts, Supabase CLI/migration commands, etc.). Update this section in the same commit that adds the scaffold — don't leave it stale._
+```
+npm run dev      # local dev server (Turbopack), http://localhost:3000
+npm run build    # production build
+npm run start    # run a production build locally
+npm run lint     # eslint
+```
+
+Supabase CLI commands (migrations, `db push`, type generation) will be added here once the schema work starts — see PLAN.md §3.3.
+
+## Current state
+
+- Next.js 16 (App Router) + TypeScript + Tailwind v4 scaffolded, brand palette wired into `app/globals.css` as theme tokens (`bg-primary`, `text-maroon`, `bg-cream`, etc.), fonts set to Fraunces (display) + Inter (body)
+- `.env.local` holds real Supabase project credentials (URL, anon key, service role key) — already git-ignored and verified not tracked; `RESEND_API_KEY` and `ADMIN_ALLOWED_EMAILS` still blank pending the Resend account
+- No Supabase schema, admin dashboard, section-library components, or public pages built yet — the homepage is still the default create-next-app starter page. This is the actual next unit of work (PLAN.md §7, Phase 1 continuing into Phase 2)
