@@ -16,6 +16,10 @@ This project's GitHub repo, Vercel project, and Supabase project live under a **
 
 If you're ever unsure which account a tool call would hit, ask rather than assume — the cost of provisioning a database or deployment under the wrong Google account is real cleanup work.
 
+**Gotcha discovered the hard way:** `vercel link` (and `vercel env pull`) overwrite `.env.local` with whatever env vars are currently set in the Vercel project — if the project has none set yet, this silently wipes out real local secrets. Before running either command, make sure Vercel's project env vars are already correct, or be ready to restore `.env.local` from a known-good copy immediately after. This is also why the Vercel project's env vars must be set (`vercel env add <NAME> production` — value piped in via `printf "%s" "value" | vercel env add ...` to avoid a trailing newline) before trusting any deployment that already happened.
+
+**Also discovered:** Vercel's GitHub integration auto-deploys to production on every push to `main` as soon as a project is linked/imported — even before anyone runs `vercel deploy`. If a project already has deployments you didn't expect, check `vercel ls` before assuming nothing is live.
+
 ## Stack
 
 Next.js (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres/Auth/Storage) + Framer Motion + Embla Carousel + react-hook-form/zod. Deployed on Vercel. Full rationale in PLAN.md §4.
@@ -70,7 +74,14 @@ See PLAN.md §8 in full. Color palette, the flour/Rizqan product facts, and the 
 
 ## Accounts status
 
-GitHub repo (`mehmedsuperfoods07-prog/mehmed`), Vercel project, and Supabase project have been created by the client under the business Gmail. This machine's `gh`/`vercel` CLIs still need their own login (see "Accounts" above) before any CLI-driven deploy or repo operation will authenticate correctly — check with `gh auth status` / `vercel whoami` before assuming either is logged in.
+GitHub repo (`mehmedsuperfood07-prog/mehmed`), Vercel project (`mehmed`, under the `mehmed2` team scope), and Supabase project have all been created under the business Gmail. This machine's `gh`/`vercel` CLIs are logged in and the local repo is linked to the Vercel project (`.vercel/project.json`, git-ignored).
+
+## Deployment status
+
+- Vercel's GitHub integration auto-deploys `main` to production on every push — has been doing so since the project was linked, so check `vercel ls` before assuming a deployment doesn't exist yet.
+- Production and Preview env vars are set in the Vercel project: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_ALLOWED_EMAILS`. `RESEND_API_KEY` is intentionally not set yet, matching `.env.local`.
+- **Known blocker:** Vercel's Deployment Protection ("Vercel Authentication") is currently ON for this project, which gates the production URL behind a Vercel login (`vercel.com/sso-api` redirect) — meaning the live site isn't actually publicly visible yet. There's no CLI command for this; it's a dashboard-only setting (Project → Settings → Deployment Protection) and a call for the client to make, not something to silently change. Confirm with the client before/instead of touching it.
+- Production aliases: `https://mehmed.vercel.app` and `https://mehmed-mehmed2.vercel.app` (both currently gated by the issue above). Custom domain `mehmedsuperfood.pk` is not yet attached to the Vercel project.
 
 ## Commands
 

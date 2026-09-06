@@ -274,7 +274,7 @@ Custom equivalent of RankMath/Yoast, since we're not using WordPress:
 7. **SEO pass** — partially done. Per-page SEO fields (title/description/no-index) exist in the schema and the Pages CRUD form, and `generateMetadata` wires them through. **Not yet built:** sitemap.xml/robots.txt routes, JSON-LD structured data.
 8. **Content population** — in progress. Home/Products/About/Contact/FAQ/Reviews/Become-a-Distributor carry real seeded copy (grounded in confirmed product facts, no fabricated stats — see section 8's note on this). Still placeholder: all imagery, Mehmed Rice specifics, real contact details, testimonials.
 9. **QA** — not started.
-10. **Deploy & handover** — not started. No Vercel deployment yet (project exists but isn't linked/deployed); no custom domain attached.
+10. **Deploy & handover** — in progress. Vercel project is linked, production env vars are set, and a production deployment succeeds on every push to `main` (Vercel's GitHub integration auto-deploys). **Blocking issue:** Vercel's Deployment Protection is gating the production URL behind a Vercel login — needs the client to disable it (or scope it to exclude Production) in the Vercel dashboard, Project → Settings → Deployment Protection; not something to change without asking, and there's no CLI path for it anyway. Custom domain `mehmedsuperfood.pk` not yet attached. No handover walkthrough done.
 
 ---
 
