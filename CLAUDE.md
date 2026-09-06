@@ -23,7 +23,7 @@ Next.js (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres/Auth/Stora
 ## Where things live
 
 - `/app/(site)/*` — public pages, shared header/footer via the `(site)` layout
-- `/app/admin/*` — the custom dashboard, auth-gated via `middleware.ts`
+- `/app/admin/*` — the custom dashboard, auth-gated via `proxy.ts` (Next.js 16 renamed the `middleware.ts` convention to `proxy.ts` — the exported function is `proxy`, not `middleware`; don't recreate a `middleware.ts` file out of habit)
 - `/components/sections/*` — one component per section-library type (Hero, RichText, ProductGrid, TestimonialSlider, etc. — see PLAN.md §3.1). Public pages are assembled by rendering a page's `page_sections` rows through this library, not by hand-writing bespoke page markup.
 - `/components/admin/*` — dashboard-only UI (block editors, forms)
 - `/components/ui/*` — shadcn/ui primitives
@@ -77,4 +77,7 @@ Supabase CLI commands (migrations, `db push`, type generation) will be added her
 
 - Next.js 16 (App Router) + TypeScript + Tailwind v4 scaffolded, brand palette wired into `app/globals.css` as theme tokens (`bg-primary`, `text-maroon`, `bg-cream`, etc.), fonts set to Fraunces (display) + Inter (body)
 - `.env.local` holds real Supabase project credentials (URL, anon key, service role key) — already git-ignored and verified not tracked; `RESEND_API_KEY` and `ADMIN_ALLOWED_EMAILS` still blank pending the Resend account
-- No Supabase schema, admin dashboard, section-library components, or public pages built yet — the homepage is still the default create-next-app starter page. This is the actual next unit of work (PLAN.md §7, Phase 1 continuing into Phase 2)
+- Database schema written as `supabase/migrations/20260906120000_init_schema.sql` (all 8 tables from PLAN.md §3.3, RLS policies, singleton `site_settings` row seeded) — **not yet applied to the live Supabase project**, since the Supabase CLI isn't linked yet (no `supabase login` done). Apply it either via `supabase link` + `supabase db push` once linked, or by pasting the file into the Supabase Dashboard's SQL Editor
+- `lib/supabase/{client,server,admin}.ts` set up (browser client, session-aware server client, service-role admin client); `lib/supabase/types.ts` is hand-written to match the migration and should be replaced with `supabase gen types typescript` output once the CLI is linked
+- `proxy.ts` (not `middleware.ts` — see above) gates `/admin/*` on an authenticated session matching `ADMIN_ALLOWED_EMAILS`; no admin UI or login page exists yet, so this currently just redirects every `/admin/*` request to a `/admin/login` page that doesn't exist yet
+- No admin dashboard, section-library components, or real public pages built yet — the homepage is still the default create-next-app starter page. Next unit of work: apply the migration, then build the admin login + dashboard shell (PLAN.md §7 Phase 2)
