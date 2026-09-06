@@ -1,6 +1,7 @@
 "use client";
 
 import type { FieldSchema } from "@/components/sections/types";
+import { ImageUploadField } from "./ImageUploadField";
 
 type ContentValue = Record<string, unknown>;
 
@@ -28,13 +29,21 @@ export function SectionEditorFields({
       {fields.map((field) => {
         const value = content[field.key];
 
-        if (field.type === "text" || field.type === "image") {
+        if (field.type === "image") {
+          return (
+            <ImageUploadField
+              key={field.key}
+              label={field.label}
+              value={(value as string) ?? ""}
+              onChange={(url) => setField(field.key, url)}
+            />
+          );
+        }
+
+        if (field.type === "text") {
           return (
             <div key={field.key}>
-              <label className="block text-sm font-medium text-ink">
-                {field.label}
-                {field.type === "image" && <span className="text-ink/40"> (image URL)</span>}
-              </label>
+              <label className="block text-sm font-medium text-ink">{field.label}</label>
               <input
                 type="text"
                 value={(value as string) ?? ""}

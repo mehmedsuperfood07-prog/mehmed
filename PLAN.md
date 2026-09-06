@@ -266,7 +266,7 @@ Custom equivalent of RankMath/Yoast, since we're not using WordPress:
 ## 7. Delivery Phases
 
 1. **Foundations** — ✅ done. Repo scaffold, Tailwind theme tokens (real confirmed palette, not placeholder), Supabase project + schema + RLS policies, admin auth.
-2. **Admin shell** — mostly done. Dashboard layout, auth, Leads inbox, and full Pages/section CRUD (generic schema-driven section editor, not a bespoke editor per type) are built. **Not yet built:** dedicated Products & category CRUD screens (products are currently seeded via `scripts/seed.ts`, not dashboard-editable) and the image upload pipeline (no Supabase Storage wiring yet — every image is a null placeholder).
+2. **Admin shell** — ✅ done. Dashboard layout, auth, Leads inbox, Pages/section CRUD (generic schema-driven section editor), Products + Categories CRUD, Testimonials management, and an image upload pipeline (Supabase Storage `media` bucket, reused across every image field) are all built. **Not yet built:** a Settings screen for `site_settings` (contact info/nav — currently only editable via the seed script or raw SQL).
 3. **Public site — static structure** — ✅ done. Header/footer and all 13 section-library components exist, wired to real DB data.
 4. **Public site — content pages** — partially done. Home, Products, About, Contact exist as real seeded pages. **Not yet built:** Become a Distributor, Gallery, Reviews, FAQ.
 5. **Blog** — not started. Still planned as Tiptap in the dashboard + public listing/detail pages.
@@ -291,7 +291,7 @@ Flagged explicitly rather than silently guessed:
 - **Other flour pack sizes** (10kg/20kg, etc.) beyond the confirmed 5kg bag: placeholder until confirmed
 - **Certifications:** the flour packaging's "Soft Roti for 7 Hours" and Rizqan's "100% Natural, Nothing Added" are marketing claims already on-package and safe to reuse; any *regulatory* certification marks (FSSAI/Halal/PSQCA-equivalent) should still be confirmed before adding separate certification badges
 - **Product/facility photography:** the packaging photos cover product shots, but we still need facility/delivery/team photography for Gallery and About pages — stock placeholders used until then
-- **Getting the flour/Rizqan packaging photos onto the actual site:** those photos were shared inline in chat, which doesn't give Claude a file to upload — every product's `image_url` is currently null. To get them live, either share the image files directly (not pasted inline) or wait for the Supabase Storage upload flow to be built in the dashboard (not started yet)
+- **Getting the flour/Rizqan packaging photos onto the actual site:** those photos were shared inline in chat, which doesn't give Claude a file to upload — every product's `image_url` is currently null. The dashboard's image upload (Products, Testimonials, any page section) now works end-to-end, so this just needs the client to upload the real files through `/admin/products/[id]` whenever convenient
 - **Domain name:** ✅ resolved — [mehmedsuperfood.pk](https://mehmedsuperfood.pk/), owned by the client. Attach to the Vercel project during deploy (Phase 10)
 - **Resend account:** not yet created — needed before the lead-generation phase (Phase 6), not blocking earlier phases
 - **Testimonials:** need real (or at least client-approved) quotes before launch; placeholders are clearly fictional in the meantime

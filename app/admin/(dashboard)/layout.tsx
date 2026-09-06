@@ -10,6 +10,8 @@ import { SignOutButton } from "./sign-out-button";
 const NAV_ITEMS = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/pages", label: "Pages" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/testimonials", label: "Testimonials" },
   { href: "/admin/leads", label: "Leads" },
 ];
 
