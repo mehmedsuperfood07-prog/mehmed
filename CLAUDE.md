@@ -78,10 +78,18 @@ GitHub repo (`mehmedsuperfood07-prog/mehmed`), Vercel project (`mehmed`, under t
 
 ## Deployment status
 
+**Live and verified**, as of this writing: https://mehmed.vercel.app — every route returns 200, real content renders (checked via DOM inspection and a live end-to-end lead submission that was confirmed in the database, then deleted).
+
+Getting here took two real fixes, both worth knowing about:
+
+1. **Deployment Protection** ("Vercel Authentication") was ON by default, gating every URL — including production — behind a Vercel login. Dashboard-only setting (Project → Settings → Deployment Protection), no CLI path; the client turned it off.
+2. **The Vercel project's Framework Preset was "Other", not "Next.js"** — meaning Vercel ran `npm run build` successfully but had no idea how to serve the output, so *every* route 404'd (including static ones), even though the build logs looked completely clean. Fixed with a `vercel.json` at the repo root declaring `{"framework": "nextjs"}`, which overrides the dashboard preset. **If routes ever 404 in production despite a clean build log, check this first** — a clean build does not imply Vercel is serving it correctly.
+
+Other status:
 - Vercel's GitHub integration auto-deploys `main` to production on every push — has been doing so since the project was linked, so check `vercel ls` before assuming a deployment doesn't exist yet.
 - Production and Preview env vars are set in the Vercel project: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_ALLOWED_EMAILS`. `RESEND_API_KEY` is intentionally not set yet, matching `.env.local`.
-- **Known blocker:** Vercel's Deployment Protection ("Vercel Authentication") is currently ON for this project, which gates the production URL behind a Vercel login (`vercel.com/sso-api` redirect) — meaning the live site isn't actually publicly visible yet. There's no CLI command for this; it's a dashboard-only setting (Project → Settings → Deployment Protection) and a call for the client to make, not something to silently change. Confirm with the client before/instead of touching it.
-- Production aliases: `https://mehmed.vercel.app` and `https://mehmed-mehmed2.vercel.app` (both currently gated by the issue above). Custom domain `mehmedsuperfood.pk` is not yet attached to the Vercel project.
+- Production aliases: `https://mehmed.vercel.app` and `https://mehmed-mehmed2.vercel.app`. Custom domain `mehmedsuperfood.pk` is not yet attached to the Vercel project.
+- Testing-tool note: this session's Browser-preview pane sometimes fails to deliver a click to a button via ref/coordinate on this deployment specifically (no error, click silently no-ops — confirmed by checking button state and network requests after clicking), while a JS-dispatched `.click()` on the same element works immediately. If a browser-driven test looks like a submit button "does nothing," try `.click()` via the JS execution tool before concluding the app is broken.
 
 ## Commands
 
