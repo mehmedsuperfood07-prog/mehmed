@@ -7,7 +7,7 @@ export function RichText({ content }: { content: RichTextContent }) {
   const paragraphs = content.body.split(/\n{2,}/).filter(Boolean);
 
   return (
-    <section className="py-16">
+    <section className="py-20 sm:py-28">
       <Container className="max-w-3xl">
         <Reveal>
           {content.heading && <h2 className="h2 text-ink">{renderHeading(content.heading)}</h2>}

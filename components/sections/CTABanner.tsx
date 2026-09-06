@@ -10,7 +10,7 @@ const FALLBACK_IMAGE =
 
 export function CTABanner({ content }: { content: CTABannerContent }) {
   return (
-    <section className="relative overflow-hidden rounded-[2.5rem] py-24 sm:py-32">
+    <section className="relative overflow-hidden rounded-[2.5rem] py-20 sm:py-28">
       <Image src={FALLBACK_IMAGE} alt="" fill className="object-cover" />
       <div className="absolute inset-0 bg-black/55" />
       <Container className="relative text-center">

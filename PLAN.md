@@ -244,6 +244,10 @@ Measured directly from the live template rather than assumed:
 - **Forms** use a shared borderless, cream-filled input style; the quote/booking form specifically clones the template's two-column "Book Us" layout, including the dark info card with a small circular badge overlapping its top-right corner.
 - **Footer** is a full-bleed primary-green band: a simple centered nav-link row, a short paragraph, a huge two-tone brand wordmark, and a lime bottom bar with the copyright line — not a conventional multi-column contact-info footer.
 
+### 5.3.1 Section spacing is uniform by rule, not by eye
+
+Every section wrapper uses the exact same vertical padding — `py-20 sm:py-28` — with two documented exceptions: `Hero` (a full-bleed photo with its own fixed height, no `py-*`) and `StatsCounter` (a deliberately compact `py-2`, meant to sit tight beneath an `ImageWithText` section rather than stand alone — see its own code comment). A previous revision had three sections quietly drifted off this value (`RichText` at `py-16`, `ProductGrid` at `sm:py-24`, `CTABanner` at `py-24 sm:py-32`), which produced visibly uneven gaps between sections on the same page — caught by the client comparing consecutive sections directly, not by any visual QA pass here. When adding or touching a section wrapper, copy the shared value exactly; don't pick a padding that "looks about right" for that one section in isolation.
+
 ### 5.4 Animation & interaction patterns
 Reproduced with Framer Motion + Embla:
 - **Scroll reveal:** section headings and cards fade + slide up (~20px) on scroll into view, staggered ~80ms per item within a group (`components/sections/Reveal.tsx`, used by nearly every renderer)
