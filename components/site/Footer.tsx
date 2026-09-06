@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 export async function Footer() {
   const supabase = await createClient();
   const { data: settings } = await supabase.from("site_settings").select("*").eq("id", 1).maybeSingle();
+  const socialLinks = (settings?.social_links as { facebook?: string; instagram?: string } | null) ?? {};
 
   return (
     <footer className="bg-ink text-white/70">
@@ -28,6 +29,15 @@ export async function Footer() {
               <Link href="/contact" className="hover:text-white">
                 Contact
               </Link>
+              <Link href="/become-a-distributor" className="hover:text-white">
+                Become a Distributor
+              </Link>
+              <Link href="/reviews" className="hover:text-white">
+                Reviews
+              </Link>
+              <Link href="/faq" className="hover:text-white">
+                FAQ
+              </Link>
             </div>
           </div>
           <div>
@@ -37,6 +47,20 @@ export async function Footer() {
               {settings?.phone && <span>{settings.phone}</span>}
               {settings?.email && <span>{settings.email}</span>}
               {settings?.opening_hours && <span>{settings.opening_hours}</span>}
+              {(socialLinks.facebook || socialLinks.instagram) && (
+                <div className="mt-2 flex gap-3">
+                  {socialLinks.facebook && (
+                    <a href={socialLinks.facebook} className="hover:text-white" target="_blank" rel="noreferrer">
+                      Facebook
+                    </a>
+                  )}
+                  {socialLinks.instagram && (
+                    <a href={socialLinks.instagram} className="hover:text-white" target="_blank" rel="noreferrer">
+                      Instagram
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

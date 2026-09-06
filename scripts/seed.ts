@@ -460,6 +460,114 @@ async function main() {
     ],
   });
 
+  await upsertPage({
+    slug: "faq",
+    title: "FAQ",
+    seo_title: "Frequently Asked Questions — Mehmed Super Foods",
+    seo_description: "Common questions about Mehmed Super Foods' products, delivery, and bulk ordering.",
+    sections: [
+      {
+        type: "hero",
+        content: { headline: "Frequently Asked Questions" },
+      },
+      {
+        type: "faq_accordion",
+        content: {
+          items: [
+            {
+              question: "What areas do you deliver to?",
+              answer:
+                "We currently deliver across several areas of Lahore, including Gulberg, Model Town, Johar Town, DHA, Township, Shahdara, Allama Iqbal Town, and Faisal Town. Contact us to confirm delivery to your specific location.",
+            },
+            {
+              question: "Do you supply in bulk to bakeries and factories?",
+              answer:
+                "Yes — alongside retail supply to general and departmental stores, we supply bulk quantities to bakeries, food chains, and factories with staff meal programs. Use the quote form to tell us what you need.",
+            },
+            {
+              question: "What is the minimum order quantity for bulk orders?",
+              answer:
+                "Minimum order quantities vary by product and business type. Request a quote and we'll get back to you with details tailored to your needs.",
+            },
+            {
+              question: "What pack sizes are available?",
+              answer:
+                "Mehmed Chakki Atta is available in 5kg bags, and Rizqan Sugarcane Juice comes in 1L bottles (Lemon and Lemon + Mint). See the Products page for the full line-up, or ask us about other sizes for bulk orders.",
+            },
+            {
+              question: "How do I become a stockist?",
+              answer:
+                "Fill out the bulk quote form on the homepage or Products page with your business details, and our team will get in touch to discuss stocking Mehmed products at your store.",
+            },
+          ],
+        },
+      },
+    ],
+  });
+
+  await upsertPage({
+    slug: "reviews",
+    title: "Reviews",
+    seo_title: "Customer Reviews — Mehmed Super Foods",
+    seo_description: "What shopkeepers, bakeries, and factories across Lahore say about Mehmed Super Foods.",
+    sections: [
+      {
+        type: "hero",
+        content: {
+          headline: "What Our Customers Say",
+          subheadline: "Feedback from shopkeepers, bakeries, and factories we supply across Lahore.",
+        },
+      },
+      {
+        type: "testimonial_slider",
+        content: {},
+      },
+      {
+        type: "cta_banner",
+        content: {
+          heading: "Join Our Growing List of Happy Customers",
+          buttons: [{ label: "Request a Quote", href: "/contact" }],
+        },
+      },
+    ],
+  });
+
+  await upsertPage({
+    slug: "become-a-distributor",
+    title: "Become a Distributor",
+    seo_title: "Become a Distributor — Mehmed Super Foods",
+    seo_description:
+      "Become a Mehmed Super Foods stockist or bulk distributor — general stores, departmental stores, bakeries, and factories across Lahore.",
+    sections: [
+      {
+        type: "hero",
+        content: {
+          headline: "Become a Distributor",
+          subheadline:
+            "Partner with Mehmed Super Foods to stock quality whole wheat flour, rice, and Rizqan sugarcane juice at your store or facility.",
+        },
+      },
+      {
+        type: "feature_grid",
+        content: {
+          heading: "Why Partner With Mehmed",
+          features: [
+            { title: "Hygienically Packed", description: "Every product is packed with hygiene and quality control in mind." },
+            { title: "Reliable Delivery", description: "Timely delivery across Lahore for both retail and bulk orders." },
+            { title: "Responsive Support", description: "A dedicated point of contact for bulk and stockist accounts." },
+          ],
+        },
+      },
+      {
+        type: "quote_form",
+        content: {
+          heading: "Request Distributor Information",
+          body: "Tell us about your business and we'll get back to you with next steps.",
+        },
+      },
+    ],
+  });
+
   console.log("Done.");
 }
 

@@ -266,13 +266,13 @@ Custom equivalent of RankMath/Yoast, since we're not using WordPress:
 ## 7. Delivery Phases
 
 1. **Foundations** — ✅ done. Repo scaffold, Tailwind theme tokens (real confirmed palette, not placeholder), Supabase project + schema + RLS policies, admin auth.
-2. **Admin shell** — ✅ done. Dashboard layout, auth, Leads inbox, Pages/section CRUD (generic schema-driven section editor), Products + Categories CRUD, Testimonials management, and an image upload pipeline (Supabase Storage `media` bucket, reused across every image field) are all built. **Not yet built:** a Settings screen for `site_settings` (contact info/nav — currently only editable via the seed script or raw SQL).
+2. **Admin shell** — ✅ done. Dashboard layout, auth, Leads inbox, Pages/section CRUD (generic schema-driven section editor), Products + Categories CRUD, Testimonials management, a Settings screen (contact info, logo, social links), and an image upload pipeline (Supabase Storage `media` bucket, reused across every image field) are all built. **Not yet built:** a nav editor — `header_nav`/`footer_nav` exist as schema columns but `Header.tsx`/`Footer.tsx` still hardcode their nav.
 3. **Public site — static structure** — ✅ done. Header/footer and all 13 section-library components exist, wired to real DB data.
-4. **Public site — content pages** — partially done. Home, Products, About, Contact exist as real seeded pages. **Not yet built:** Become a Distributor, Gallery, Reviews, FAQ.
+4. **Public site — content pages** — mostly done. Home, Products, About, Contact, FAQ, Reviews, and Become a Distributor all exist as real seeded pages. **Not yet built:** Gallery — deliberately deferred since it exists only to show photos and none exist yet (see the imagery open item below); build it once real photography is available.
 5. **Blog** — not started. Still planned as Tiptap in the dashboard + public listing/detail pages.
-6. **Lead generation** — partially done. Contact form and the bulk-quote form are fully wired end-to-end (verified live: a real test submission was inserted into `leads` and appeared correctly) and show up in the dashboard inbox. **Not yet done:** Resend email notifications (no Resend account yet).
+6. **Lead generation** — done except email. Contact form and the bulk-quote form (used on Home, Products, and Become a Distributor) are fully wired end-to-end and show up in the dashboard inbox; Resend notification code is written and wired into `submitLead` but no-ops until the client has a Resend account and sets `RESEND_API_KEY`. Note: quote-form submissions always record as lead type `"quote"` regardless of hosting page — the schema's separate `"distributor"` type isn't used, a deliberate scope cut (see CLAUDE.md).
 7. **SEO pass** — partially done. Per-page SEO fields (title/description/no-index) exist in the schema and the Pages CRUD form, and `generateMetadata` wires them through. **Not yet built:** sitemap.xml/robots.txt routes, JSON-LD structured data.
-8. **Content population** — in progress. Home/Products/About/Contact carry real seeded copy (grounded in confirmed product facts, no fabricated stats — see section 8's note on this). Still placeholder: all imagery, Mehmed Rice specifics, contact details, testimonials.
+8. **Content population** — in progress. Home/Products/About/Contact/FAQ/Reviews/Become-a-Distributor carry real seeded copy (grounded in confirmed product facts, no fabricated stats — see section 8's note on this). Still placeholder: all imagery, Mehmed Rice specifics, real contact details, testimonials.
 9. **QA** — not started.
 10. **Deploy & handover** — not started. No Vercel deployment yet (project exists but isn't linked/deployed); no custom domain attached.
 
@@ -293,7 +293,7 @@ Flagged explicitly rather than silently guessed:
 - **Product/facility photography:** the packaging photos cover product shots, but we still need facility/delivery/team photography for Gallery and About pages — stock placeholders used until then
 - **Getting the flour/Rizqan packaging photos onto the actual site:** those photos were shared inline in chat, which doesn't give Claude a file to upload — every product's `image_url` is currently null. The dashboard's image upload (Products, Testimonials, any page section) now works end-to-end, so this just needs the client to upload the real files through `/admin/products/[id]` whenever convenient
 - **Domain name:** ✅ resolved — [mehmedsuperfood.pk](https://mehmedsuperfood.pk/), owned by the client. Attach to the Vercel project during deploy (Phase 10)
-- **Resend account:** not yet created — needed before the lead-generation phase (Phase 6), not blocking earlier phases
+- **Resend account:** not yet created. The integration code is done and wired in (`lib/email/resend.ts`) — it no-ops safely until `RESEND_API_KEY` is set, so this isn't blocking anything, but real lead notifications won't email anyone until the client creates an account. Once created, also verify `mehmedsuperfood.pk` as a sending domain (Resend's shared address only delivers to the account's own email otherwise)
 - **Testimonials:** need real (or at least client-approved) quotes before launch; placeholders are clearly fictional in the meantime
 
 ---

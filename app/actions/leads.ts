@@ -2,6 +2,7 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { leadInputSchema, type LeadInput } from "@/lib/validations/leads";
+import { sendLeadNotification } from "@/lib/email/resend";
 
 // Every lead form (general contact, bulk quote, and future distributor
 // signup) goes through this one action -- see CLAUDE.md "Working
@@ -20,25 +21,29 @@ export async function submitLead(
   const data = parsed.data;
   const supabase = createAdminClient();
 
-  const { error } = await supabase.from("leads").insert({
-    type: data.type,
-    name: data.name,
-    email: data.email || null,
-    message: data.message || null,
-    phone: "phone" in data ? data.phone || null : null,
-    business_name: "business_name" in data ? data.business_name : null,
-    city: "city" in data ? data.city : null,
-    business_type: "business_type" in data ? data.business_type : null,
-    products_interested: "products_interested" in data ? data.products_interested : [],
-  });
+  const { data: lead, error } = await supabase
+    .from("leads")
+    .insert({
+      type: data.type,
+      name: data.name,
+      email: data.email || null,
+      message: data.message || null,
+      phone: "phone" in data ? data.phone || null : null,
+      business_name: "business_name" in data ? data.business_name : null,
+      city: "city" in data ? data.city : null,
+      business_type: "business_type" in data ? data.business_type : null,
+      products_interested: "products_interested" in data ? data.products_interested : [],
+    })
+    .select()
+    .single();
 
   if (error) {
     return { success: false, error: "Something went wrong. Please try again." };
   }
 
-  // TODO: Resend email notification once RESEND_API_KEY is set -- see
-  // CLAUDE.md "Known open items". Leads are already visible in
-  // /admin/leads regardless.
+  // Best-effort -- no-ops until RESEND_API_KEY is set, and never throws,
+  // so a lead is saved (and visible in /admin/leads) regardless of email.
+  await sendLeadNotification(lead);
 
   return { success: true };
 }
