@@ -22,8 +22,8 @@ export function Hero({ content }: { content: HeroContent }) {
   } = content;
 
   return (
-    <section className="relative overflow-hidden rounded-b-[2.5rem] pt-24 sm:pt-32">
-      <div className="relative min-h-[720px] sm:h-[640px] sm:min-h-0">
+    <section className="relative overflow-hidden rounded-b-[2.5rem]">
+      <div className="relative min-h-[760px] sm:h-[680px] sm:min-h-0">
         <Image
           src={image_url || FALLBACK_IMAGE}
           alt=""
@@ -33,7 +33,11 @@ export function Hero({ content }: { content: HeroContent }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
 
-        <Container className="relative flex h-full min-h-[720px] flex-col justify-between gap-8 py-6 sm:min-h-0 sm:gap-0 sm:py-10">
+        {/* Photo fills the section all the way to the top -- the header
+            (rendered by the (site) layout, position: absolute) floats
+            transparently over it. Clearance from the header is padding on
+            this content wrapper, not a gap in the section/photo itself. */}
+        <Container className="relative flex h-full min-h-[760px] flex-col justify-between gap-8 pt-28 pb-6 sm:min-h-0 sm:gap-0 sm:pt-36 sm:pb-10">
           {/* Floating widget cards -- see CLAUDE.md for why these replace
               the template's live avatar/map widgets with static badges. */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
