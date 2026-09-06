@@ -264,7 +264,7 @@ async function main() {
         type: "hero",
         content: {
           eyebrow: "Quality Staples, Delivered Fresh",
-          headline: "Quality You Can Taste, Trust You Can Rely On",
+          headline: "Quality You Can Taste, **Trust You Can Rely On**",
           subheadline:
             "Whole wheat flour, rice, and Rizqan sugarcane juice — freshly packed and delivered across Lahore.",
           primary_cta_label: "View Products",
@@ -276,15 +276,17 @@ async function main() {
       {
         type: "image_with_text",
         content: {
-          heading: "A Household Name in Quality Staples",
+          heading: "A Household Name in **Quality Staples**",
           body: "Mehmed Super Foods packs and supplies whole wheat flour, rice, and Rizqan sugarcane juice to shops, bakeries, and factories across Lahore — with a focus on quality sourcing and hygienic packing at every step.",
           image_on_right: true,
+          cta_label: "More About Us",
+          cta_href: "/about",
         },
       },
       {
         type: "product_grid",
         content: {
-          heading: "Our Products",
+          heading: "Our Menu is **Rolling with Quality**",
           subheading: "Quality staples for your shop, bakery, or factory.",
           featured_only: true,
         },
@@ -292,22 +294,27 @@ async function main() {
       {
         type: "feature_grid",
         content: {
-          heading: "Why Choose Mehmed",
+          heading: "Because Your Shelves Deserve **Seriously Reliable** Staples",
           subheading: "Here's what shops and bulk buyers can count on.",
+          style: "light",
           features: [
             {
+              icon: "🧼",
               title: "Hygienically Packed",
               description: "Every product is packed with hygiene and quality control in mind.",
             },
             {
+              icon: "🌾",
               title: "Quality-Checked Sourcing",
               description: "Wheat and rice are sourced and checked for consistent quality.",
             },
             {
+              icon: "🚚",
               title: "Reliable Bulk Delivery",
               description: "Timely delivery across Lahore for both retail and bulk orders.",
             },
             {
+              icon: "🥤",
               title: "Fresh, Additive-Free Juice",
               description: "Rizqan sugarcane juice is bottled fresh with nothing artificial added.",
             },
@@ -317,26 +324,42 @@ async function main() {
       {
         type: "coverage_area",
         content: {
-          heading: "Where We Deliver",
+          heading: "We **Move with the Flavor** – Where We Deliver",
           body: "We currently supply general stores, departmental stores, bakeries, and factories across these areas of Lahore — with more added as we grow.",
           areas: LAHORE_AREAS,
         },
       },
       {
+        type: "feature_grid",
+        content: {
+          heading: "More Than Staples – It's a **Supply You Can Count On**",
+          subheading: "Mehmed is built for consistency, hygiene, and reliable bulk service.",
+          style: "dark",
+          features: [
+            { icon: "🏭", title: "Hygienic packing facility" },
+            { icon: "📦", title: "Consistent pack sizes" },
+            { icon: "🕒", title: "On-time delivery" },
+            { icon: "🤝", title: "Dedicated bulk support" },
+          ],
+        },
+      },
+      {
         type: "testimonial_slider",
-        content: { heading: "What Our Customers Say" },
+        content: { heading: "**Bite-Sized Words** from Our Happy Customers" },
       },
       {
         type: "quote_form",
         content: {
-          heading: "Become a Stockist or Request a Bulk Quote",
+          heading: "Become a Stockist or **Request a Bulk Quote**",
           body: "Running a store, bakery, or factory canteen? Tell us what you need and we'll get back to you with pricing and availability.",
+          info_heading: "We Supply To:",
+          info_items: ["General Stores", "Departmental Stores", "Bakeries", "Factories & Staff Canteens"],
         },
       },
       {
         type: "cta_banner",
         content: {
-          heading: "Ready to Stock Mehmed?",
+          heading: "One Step Away from Your **New Favorite Staple**",
           body: "Get in touch and let's talk about your store or facility's needs.",
           buttons: [
             { label: "View Products", href: "/products" },
@@ -358,20 +381,22 @@ async function main() {
       {
         type: "hero",
         content: {
-          headline: "Our Products",
+          headline: "Staples Worth **Stocking**",
           subheadline:
             "Whole wheat flour, rice, and Rizqan sugarcane juice — packed fresh for shops, bakeries, and factories across Lahore.",
         },
       },
       {
         type: "product_grid",
-        content: { heading: "All Products", featured_only: false },
+        content: { heading: "All of Our **Products**", featured_only: false },
       },
       {
         type: "quote_form",
         content: {
-          heading: "Need a Custom Quote?",
+          heading: "Need a **Custom Quote**?",
           body: "Tell us what you're looking for and we'll get back to you with pricing and availability.",
+          info_heading: "We Supply To:",
+          info_items: ["General Stores", "Departmental Stores", "Bakeries", "Factories & Staff Canteens"],
         },
       },
     ],
@@ -386,44 +411,45 @@ async function main() {
       {
         type: "hero",
         content: {
-          headline: "About Mehmed Super Foods",
+          headline: "A Household Name in **Quality Staples**",
           subheadline: "A commitment to quality staples, from sourcing to your shop shelf.",
         },
       },
       {
         type: "rich_text",
         content: {
-          heading: "Our Story",
+          heading: "Our **Story**",
           body: "Mehmed Super Foods started with a simple goal: bring consistently good whole wheat flour, rice, and refreshing sugarcane juice to shops and businesses across Lahore.\n\nToday, we supply general stores, departmental stores, and bulk buyers like bakeries and factories, with a focus on quality and reliable delivery.",
         },
       },
       {
         type: "rich_text",
         content: {
-          heading: "Our Philosophy",
+          heading: "Our **Philosophy**",
           body: "We believe staples shouldn't be an afterthought. Every batch is packed with attention to hygiene and quality, whether it's headed to a corner store or a factory kitchen.",
         },
       },
       {
         type: "feature_grid",
         content: {
-          heading: "Our Process",
+          heading: "From Sourcing to Your **Shop Shelf**",
+          style: "light",
           features: [
-            { title: "Sourcing", description: "Wheat and rice sourced with quality in mind." },
-            { title: "Milling & Processing", description: "Processed and packed under hygienic conditions." },
-            { title: "Packing", description: "Sealed and labelled for freshness and consistency." },
-            { title: "Distribution", description: "Delivered across Lahore to retail and bulk customers." },
+            { icon: "🌾", title: "Sourcing", description: "Wheat and rice sourced with quality in mind." },
+            { icon: "⚙️", title: "Milling & Processing", description: "Processed and packed under hygienic conditions." },
+            { icon: "📦", title: "Packing", description: "Sealed and labelled for freshness and consistency." },
+            { icon: "🚚", title: "Distribution", description: "Delivered across Lahore to retail and bulk customers." },
           ],
         },
       },
       {
         type: "coverage_area",
-        content: { heading: "Where We Deliver", areas: LAHORE_AREAS },
+        content: { heading: "Where We **Deliver**", areas: LAHORE_AREAS },
       },
       {
         type: "cta_banner",
         content: {
-          heading: "Want to Partner with Us?",
+          heading: "Want to **Partner** with Us?",
           buttons: [
             { label: "View Products", href: "/products" },
             { label: "Contact Us", href: "/contact" },
@@ -442,20 +468,20 @@ async function main() {
       {
         type: "hero",
         content: {
-          headline: "Get in Touch",
+          headline: "Let's **Get in Touch**",
           subheadline: "Questions about our products, pricing, or delivery? We're here to help.",
         },
       },
       {
         type: "contact_form",
         content: {
-          heading: "Send Us a Message",
+          heading: "Send Us a **Message**",
           body: "Fill out the form and we'll get back to you as soon as we can.",
         },
       },
       {
         type: "coverage_area",
-        content: { heading: "Where We Deliver", areas: LAHORE_AREAS },
+        content: { heading: "Where We **Deliver**", areas: LAHORE_AREAS },
       },
     ],
   });
@@ -468,7 +494,7 @@ async function main() {
     sections: [
       {
         type: "hero",
-        content: { headline: "Frequently Asked Questions" },
+        content: { headline: "Frequently **Asked Questions**" },
       },
       {
         type: "faq_accordion",
@@ -514,7 +540,7 @@ async function main() {
       {
         type: "hero",
         content: {
-          headline: "What Our Customers Say",
+          headline: "What Our **Customers Say**",
           subheadline: "Feedback from shopkeepers, bakeries, and factories we supply across Lahore.",
         },
       },
@@ -525,7 +551,7 @@ async function main() {
       {
         type: "cta_banner",
         content: {
-          heading: "Join Our Growing List of Happy Customers",
+          heading: "Join Our Growing List of **Happy Customers**",
           buttons: [{ label: "Request a Quote", href: "/contact" }],
         },
       },
@@ -542,7 +568,7 @@ async function main() {
       {
         type: "hero",
         content: {
-          headline: "Become a Distributor",
+          headline: "Bring Mehmed to **Your Shelves**",
           subheadline:
             "Partner with Mehmed Super Foods to stock quality whole wheat flour, rice, and Rizqan sugarcane juice at your store or facility.",
         },
@@ -550,19 +576,22 @@ async function main() {
       {
         type: "feature_grid",
         content: {
-          heading: "Why Partner With Mehmed",
+          heading: "Why Partner With **Mehmed**",
+          style: "light",
           features: [
-            { title: "Hygienically Packed", description: "Every product is packed with hygiene and quality control in mind." },
-            { title: "Reliable Delivery", description: "Timely delivery across Lahore for both retail and bulk orders." },
-            { title: "Responsive Support", description: "A dedicated point of contact for bulk and stockist accounts." },
+            { icon: "🧼", title: "Hygienically Packed", description: "Every product is packed with hygiene and quality control in mind." },
+            { icon: "🚚", title: "Reliable Delivery", description: "Timely delivery across Lahore for both retail and bulk orders." },
+            { icon: "🤝", title: "Responsive Support", description: "A dedicated point of contact for bulk and stockist accounts." },
           ],
         },
       },
       {
         type: "quote_form",
         content: {
-          heading: "Request Distributor Information",
+          heading: "Request **Distributor** Information",
           body: "Tell us about your business and we'll get back to you with next steps.",
+          info_heading: "Great Fit For:",
+          info_items: ["General Stores", "Departmental Stores", "Bakeries", "Factories & Staff Canteens"],
         },
       },
     ],

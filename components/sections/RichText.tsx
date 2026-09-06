@@ -1,5 +1,6 @@
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
+import { renderHeading } from "./Accent";
 import type { RichTextContent } from "./types";
 
 export function RichText({ content }: { content: RichTextContent }) {
@@ -9,10 +10,8 @@ export function RichText({ content }: { content: RichTextContent }) {
     <section className="py-16">
       <Container className="max-w-3xl">
         <Reveal>
-          {content.heading && (
-            <h2 className="font-display text-3xl text-ink">{content.heading}</h2>
-          )}
-          <div className="mt-4 space-y-4 text-ink/80">
+          {content.heading && <h2 className="h2 text-ink">{renderHeading(content.heading)}</h2>}
+          <div className="mt-5 space-y-4 text-ink-soft">
             {paragraphs.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}

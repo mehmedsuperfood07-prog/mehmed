@@ -1,24 +1,33 @@
-import Link from "next/link";
+import Image from "next/image";
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
+import { renderHeading } from "./Accent";
+import { Button } from "./Button";
 import type { CTABannerContent } from "./types";
+
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1670684684445-a4504dca0bbc?auto=format&fit=crop&w=1800&q=80";
 
 export function CTABanner({ content }: { content: CTABannerContent }) {
   return (
-    <section className="bg-maroon py-16 text-white">
-      <Container className="text-center">
+    <section className="relative overflow-hidden rounded-[2.5rem] py-24 sm:py-32">
+      <Image src={FALLBACK_IMAGE} alt="" fill className="object-cover" />
+      <div className="absolute inset-0 bg-black/55" />
+      <Container className="relative text-center">
         <Reveal>
-          <h2 className="font-display text-3xl">{content.heading}</h2>
-          {content.body && <p className="mx-auto mt-3 max-w-xl text-white/80">{content.body}</p>}
+          <h2 className="h2 text-white">{renderHeading(content.heading, "text-lime")}</h2>
+          {content.body && (
+            <p className="mx-auto mt-4 max-w-xl text-white/80">{content.body}</p>
+          )}
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            {content.buttons.map((button) => (
-              <Link
+            {content.buttons.map((button, index) => (
+              <Button
                 key={button.label}
                 href={button.href}
-                className="rounded-lg bg-white px-6 py-3 font-medium text-maroon transition-transform hover:scale-[1.03]"
+                variant={index === content.buttons.length - 1 ? "lime" : "outline"}
               >
                 {button.label}
-              </Link>
+              </Button>
             ))}
           </div>
         </Reveal>

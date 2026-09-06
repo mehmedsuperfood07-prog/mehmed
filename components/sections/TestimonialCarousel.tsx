@@ -9,7 +9,7 @@ type Testimonial = Database["public"]["Tables"]["testimonials"]["Row"];
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="text-gold" aria-label={`Rated ${rating} out of 5`}>
+    <div className="text-primary" aria-label={`Rated ${rating} out of 5`}>
       {"★".repeat(rating)}
       {"☆".repeat(5 - rating)}
     </div>
@@ -20,6 +20,7 @@ export function TestimonialCarousel({ testimonials }: { testimonials: Testimonia
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }),
   ]);
+
   // Re-render on Embla's own events rather than mirroring its state into a
   // separate useState set synchronously inside the effect (flagged by
   // react-hooks/set-state-in-effect) -- selectedScrollSnap() is read fresh
@@ -43,12 +44,17 @@ export function TestimonialCarousel({ testimonials }: { testimonials: Testimonia
         <div className="flex">
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="min-w-0 flex-[0_0_100%] px-2 sm:flex-[0_0_50%]">
-              <div className="h-full rounded-2xl border border-black/5 bg-surface p-6">
+              <div className="relative h-full rounded-3xl bg-lime p-7">
+                <span className="absolute right-6 top-6 font-serif text-4xl text-primary/40">
+                  &rdquo;
+                </span>
                 <Stars rating={testimonial.rating} />
-                <p className="mt-3 text-ink/80">&ldquo;{testimonial.quote}&rdquo;</p>
-                <p className="mt-4 text-sm font-medium text-ink">
-                  {testimonial.author_name}
-                  {testimonial.area && <span className="text-ink/50">, {testimonial.area}</span>}
+                <p className="accent mt-4 text-xl leading-snug text-lime-text">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+                <p className="mt-5 text-sm font-medium text-primary">
+                  — {testimonial.author_name}
+                  {testimonial.area && `, ${testimonial.area}`}
                 </p>
               </div>
             </div>

@@ -1,17 +1,26 @@
 @import "tailwindcss";
 
+/* Design system cloned from the template (templatekit.selaraswp.com/restaurant):
+   Inter throughout at huge, tight-tracked, weight-400 heading sizes, an
+   italic serif accent font for emphasis phrases, fully pill-shaped buttons,
+   a white base with exactly two brand colors (a dark solid + a light
+   accent) used the same way the template used teal + lime. See CLAUDE.md
+   "Design system" for the full mapping. */
+
 :root {
-  --background: #f6eeda;
-  --foreground: #2b2420;
+  --background: #ffffff;
+  --foreground: #171717;
 
   --color-primary: #1b7a3e;
   --color-primary-dark: #145c2f;
   --color-maroon: #7a1f1f;
   --color-red: #d42a1e;
   --color-gold: #c9a227;
-  --color-lime: #8bc53f;
+  --color-lime: #d7f0a2;
+  --color-lime-text: #1b3a12;
   --color-cream: #f6eeda;
-  --color-ink: #2b2420;
+  --color-ink: #171717;
+  --color-ink-soft: #6b6b6b;
   --color-surface: #ffffff;
 }
 
@@ -24,15 +33,53 @@
   --color-red: var(--color-red);
   --color-gold: var(--color-gold);
   --color-lime: var(--color-lime);
+  --color-lime-text: var(--color-lime-text);
   --color-cream: var(--color-cream);
   --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
   --color-surface: var(--color-surface);
-  --font-display: var(--font-fraunces);
   --font-sans: var(--font-inter);
+  --font-accent: var(--font-instrument-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Heading scale -- huge, weight 400, very tight tracking, matching the
+   template exactly rather than a conventional bold/tight-but-not-extreme
+   scale. Use these utility classes instead of ad hoc text-4xl etc. on
+   headings so the whole site stays consistent. */
+.h1 {
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+@media (min-width: 640px) {
+  .h1 {
+    font-size: 4.5rem;
+  }
+}
+.h2 {
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+@media (min-width: 640px) {
+  .h2 {
+    font-size: 3.5rem;
+  }
+}
+
+/* Accent: the italic serif treatment used mid-heading for emphasis
+   ("Every Bite", "Seriously Delicious") -- never a whole heading, just a
+   phrase within one. */
+.accent {
+  font-family: var(--font-accent), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
 }

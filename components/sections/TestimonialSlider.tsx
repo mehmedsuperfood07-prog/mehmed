@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
+import { renderHeading } from "./Accent";
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import type { TestimonialSliderContent } from "./types";
 
@@ -17,13 +18,16 @@ export async function TestimonialSlider({ content }: { content: TestimonialSlide
   }
 
   return (
-    <section className="bg-cream py-16">
+    <section className="py-20 sm:py-28">
       <Container>
         <Reveal className="mx-auto max-w-2xl text-center">
-          {content.heading && <h2 className="font-display text-3xl text-ink">{content.heading}</h2>}
-          {content.subheading && <p className="mt-3 text-ink/70">{content.subheading}</p>}
+          <p className="mb-3 text-sm font-medium uppercase tracking-wide text-primary">
+            Testimonials
+          </p>
+          {content.heading && <h2 className="h2 text-ink">{renderHeading(content.heading)}</h2>}
+          {content.subheading && <p className="mt-4 text-ink-soft">{content.subheading}</p>}
         </Reveal>
-        <div className="mt-10">
+        <div className="mt-12">
           <TestimonialCarousel testimonials={testimonials} />
         </div>
       </Container>

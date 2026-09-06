@@ -16,10 +16,12 @@ export const SECTION_LABELS: Record<SectionType, string> = {
   quote_form: "Quote Form",
 };
 
+const HEADING_HINT = "wrap a phrase in **double asterisks** for the italic accent style";
+
 export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
   hero: [
     { key: "eyebrow", label: "Eyebrow", type: "text", optional: true },
-    { key: "headline", label: "Headline", type: "text" },
+    { key: "headline", label: `Headline (${HEADING_HINT})`, type: "text" },
     { key: "subheadline", label: "Subheadline", type: "text", optional: true },
     { key: "body", label: "Body", type: "textarea", optional: true },
     { key: "image_url", label: "Background image", type: "image", optional: true },
@@ -29,14 +31,16 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     { key: "secondary_cta_href", label: "Secondary button link", type: "text", optional: true },
   ],
   rich_text: [
-    { key: "heading", label: "Heading", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     { key: "body", label: "Body", type: "textarea" },
   ],
   image_with_text: [
-    { key: "heading", label: "Heading", type: "text" },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "body", label: "Body", type: "textarea" },
     { key: "image_url", label: "Image", type: "image", optional: true },
     { key: "image_on_right", label: "Image on the right", type: "boolean" },
+    { key: "cta_label", label: "Button label", type: "text", optional: true },
+    { key: "cta_href", label: "Button link", type: "text", optional: true },
   ],
   stats_counter: [
     { key: "heading", label: "Heading", type: "text", optional: true },
@@ -53,35 +57,37 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     },
   ],
   feature_grid: [
-    { key: "heading", label: "Heading", type: "text" },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "subheading", label: "Subheading", type: "textarea", optional: true },
+    { key: "style", label: "Style", type: "select", options: ["light", "dark"] },
     {
       key: "features",
       label: "Features",
       type: "repeater",
       itemLabel: "Feature",
       fields: [
+        { key: "icon", label: "Icon (emoji)", type: "text", optional: true },
         { key: "title", label: "Title", type: "text" },
         { key: "description", label: "Description", type: "textarea" },
       ],
     },
   ],
   product_grid: [
-    { key: "heading", label: "Heading", type: "text" },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "subheading", label: "Subheading", type: "textarea", optional: true },
     { key: "featured_only", label: "Featured products only", type: "boolean" },
   ],
   coverage_area: [
-    { key: "heading", label: "Heading", type: "text" },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "body", label: "Body", type: "textarea", optional: true },
     { key: "areas", label: "Areas (one per line)", type: "list", itemLabel: "Area" },
   ],
   testimonial_slider: [
-    { key: "heading", label: "Heading", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     { key: "subheading", label: "Subheading", type: "textarea", optional: true },
   ],
   cta_banner: [
-    { key: "heading", label: "Heading", type: "text" },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "body", label: "Body", type: "textarea", optional: true },
     {
       key: "buttons",
@@ -95,7 +101,7 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     },
   ],
   faq_accordion: [
-    { key: "heading", label: "Heading", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     {
       key: "items",
       label: "Questions",
@@ -108,7 +114,7 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     },
   ],
   gallery: [
-    { key: "heading", label: "Heading", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     {
       key: "images",
       label: "Images",
@@ -121,12 +127,14 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     },
   ],
   contact_form: [
-    { key: "heading", label: "Heading", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     { key: "body", label: "Body", type: "textarea", optional: true },
   ],
   quote_form: [
-    { key: "heading", label: "Heading", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     { key: "body", label: "Body", type: "textarea", optional: true },
+    { key: "info_heading", label: "Info card heading", type: "text", optional: true },
+    { key: "info_items", label: "Info card checklist (one per line)", type: "list", itemLabel: "Item" },
   ],
 };
 
@@ -135,7 +143,7 @@ export const SECTION_DEFAULT_CONTENT: SectionContentMap = {
   rich_text: { body: "Write something here." },
   image_with_text: { heading: "Heading", body: "Body text.", image_on_right: true },
   stats_counter: { stats: [] },
-  feature_grid: { heading: "Why Choose Us", features: [] },
+  feature_grid: { heading: "Why Choose Us", style: "light", features: [] },
   product_grid: { heading: "Our Products", featured_only: true },
   coverage_area: { heading: "Where We Deliver", areas: [] },
   testimonial_slider: { heading: "What Our Customers Say" },

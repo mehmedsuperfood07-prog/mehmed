@@ -61,7 +61,7 @@ export function SectionManager({ pageId, sections }: { pageId: string; sections:
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-display text-xl text-ink">Sections</h2>
+        <h2 className="text-xl text-ink">Sections</h2>
         <div className="flex items-center gap-2">
           <select
             value={addType}

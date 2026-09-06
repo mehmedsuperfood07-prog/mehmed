@@ -31,26 +31,32 @@ function Counter({ value, suffix }: { value: string; suffix?: string }) {
   );
 }
 
+// Mirrors the template's compact stat card nested under the About section's
+// CTA button -- a shared lime pill containing several numbers side by side,
+// not a full-bleed band. Compose it directly after an ImageWithText section
+// to approximate that combined layout.
 export function StatsCounter({ content }: { content: StatsCounterContent }) {
+  if (content.stats.length === 0) return null;
+
   return (
-    <section className="bg-primary py-16 text-white">
+    <div className="py-2">
       <Container>
         {content.heading && (
           <Reveal>
-            <h2 className="text-center font-display text-3xl">{content.heading}</h2>
+            <p className="mb-4 text-sm font-medium text-ink-soft">{content.heading}</p>
           </Reveal>
         )}
-        <div className="mt-10 grid grid-cols-2 gap-8 sm:grid-cols-4">
-          {content.stats.map((stat, index) => (
-            <Reveal key={stat.label} delay={index * 0.08} className="text-center">
-              <p className="font-display text-4xl">
+        <Reveal className="inline-flex flex-wrap gap-8 rounded-2xl bg-lime px-8 py-6 sm:gap-12">
+          {content.stats.map((stat) => (
+            <div key={stat.label}>
+              <p className="h2 text-lime-text">
                 <Counter value={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="mt-2 text-sm text-white/80">{stat.label}</p>
-            </Reveal>
+              <p className="mt-1 text-sm text-lime-text/70">{stat.label}</p>
+            </div>
           ))}
-        </div>
+        </Reveal>
       </Container>
-    </section>
+    </div>
   );
 }

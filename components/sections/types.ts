@@ -41,6 +41,8 @@ export type ImageWithTextContent = {
   body: string;
   image_url?: string;
   image_on_right: boolean;
+  cta_label?: string;
+  cta_href?: string;
 };
 
 export type StatsCounterContent = {
@@ -51,7 +53,8 @@ export type StatsCounterContent = {
 export type FeatureGridContent = {
   heading: string;
   subheading?: string;
-  features: { title: string; description: string }[];
+  style?: "light" | "dark";
+  features: { title: string; description: string; icon?: string }[];
 };
 
 export type ProductGridContent = {
@@ -95,6 +98,8 @@ export type ContactFormContent = {
 export type QuoteFormContent = {
   heading?: string;
   body?: string;
+  info_heading?: string;
+  info_items?: string[];
 };
 
 export type SectionContentMap = {
@@ -119,5 +124,6 @@ export type FieldSchema =
   | { key: string; label: string; type: "textarea"; optional?: boolean }
   | { key: string; label: string; type: "image"; optional?: boolean }
   | { key: string; label: string; type: "boolean" }
+  | { key: string; label: string; type: "select"; options: string[] }
   | { key: string; label: string; type: "list"; itemLabel: string }
   | { key: string; label: string; type: "repeater"; itemLabel: string; fields: FieldSchema[] };

@@ -203,51 +203,60 @@ Practical implications:
 
 ## 5. Design System
 
-### 5.1 Color palette — **confirmed, from packaging**
+**This section was rewritten after a direct visual/structural audit of the template** (computed styles + section-by-section screenshots), because the first pass at this plan described the template's design in prose without actually matching it in the built components — a real gap that was called out directly and corrected. Everything below reflects what's actually implemented, not intentions.
 
-Derived directly from the two packaging photos the client provided (Mehmed Whole Wheat Flour bag, Rizqan Sugarcane Juice bottles — Lemon and Lemon+Mint). Both packs independently converge on green as the "natural/agricultural" signal (the wheat-leaf mark on the flour logo, the dominant green on every Rizqan bottle), so green is the site's primary brand color, with the flour bag's maroon/red and gold supplying the warmer accent and premium-badge colors, and its cream background supplying the site's neutral base instead of stark white.
+### 5.1 Color palette — confirmed, from packaging, applied the way the template applies its two colors
+
+The template itself uses almost no color: a white base, exactly **two** brand colors (a dark teal and a light lime), used consistently — dark teal for full-bleed sections and primary buttons, lime for card backgrounds, accent text, and secondary buttons. We map Mehmed's confirmed palette onto that same two-color discipline rather than spreading four+ colors around:
 
 ```
---color-primary:       #1B7A3E   /* brand green — Rizqan bottle cap/logo + Mehmed wheat-leaf mark */
+--color-primary:       #1B7A3E   /* the "teal" role -- full-bleed sections, header CTA, primary pill buttons */
 --color-primary-dark:  #145C2F   /* hover/pressed state */
---color-maroon:        #7A1F1F   /* deep red from the "Mehmed" / "FLOUR" wordmark — headings, quote accents */
---color-red:           #D42A1E   /* vivid red from the flour bag's top/bottom bands + ribbon — CTA buttons, badges */
---color-gold:          #C9A227   /* ribbon/laurel-badge gold — dividers, premium accents, star ratings */
---color-lime:          #8BC53F   /* Rizqan "JUICE" wordmark + lemon accent — juice-line highlights, chips */
---color-cream:         #F6EEDA   /* flour bag's warm off-white — site background base, replaces stark white */
---color-ink:           #2B2420   /* warm dark brown-charcoal body text */
---color-surface:       #FFFFFF   /* card backgrounds, contrast surfaces */
+--color-lime:          #D7F0A2   /* the "lime" role -- card backgrounds, accent headline color, secondary buttons */
+--color-lime-text:     #1B3A12   /* body text sitting on the lime card background */
+--color-maroon:        #7A1F1F   /* flour-line red, used sparingly (not a section color) */
+--color-red:           #D42A1E
+--color-gold:          #C9A227
+--color-cream:         #F6EEDA   /* form input fill, alternate light surface -- not the page background */
+--color-ink:           #171717   /* body text on white */
+--color-ink-soft:      #6B6B6B   /* secondary/muted text -- matches the template's gray body copy */
+--background:          #FFFFFF   /* the page is white by default, like the template -- NOT cream */
 ```
 
-Usage guidance:
-- **Primary green** carries the header, primary nav states, section backgrounds that need a "fresh/natural" read, and Rizqan-specific product cards.
-- **Maroon + vivid red** are the flour line's colors and double as the site's CTA/action color (buttons like "Request a Quote," "Inquire Now") — red reads as appetite/urgency and is a deliberate choice for conversion elements, not just a flour-page accent.
-- **Gold** is used sparingly — badges (e.g. "Soft Roti for 7 Hours," "100% Natural"), star ratings, dividers — never as a large fill.
-- **Lime** is scoped to Rizqan-related UI (product cards, juice-flavor chips) so it doesn't compete with the primary green everywhere else.
-- **Cream**, not white, is the default page background; white is reserved for cards/surfaces that need to pop off that cream base.
+The first version of this palette (documented in an earlier revision of this section) used cream as the page background and spread maroon/gold/red across the UI as if they were section colors. That doesn't match the template, which is white-based with disciplined two-color use — corrected here. Maroon/red/gold still exist as tokens (there's real packaging basis for them) but are held in reserve for a future use that needs them, not forced into the current section set.
 
-These are wired up as Tailwind theme tokens (not hardcoded utility colors), so if the client's actual **Mehmed Rice** packaging (not yet shared) turns out to use a noticeably different color story, adjusting is a one-file change rather than a codebase-wide find-and-replace.
+### 5.2 Typography — matches the template's actual computed styles, not a guess
 
-### 5.2 Typography
-- Display/headline font: a warm, chunky serif with sturdy strokes (placeholder: **Fraunces**) — chosen to echo the bold serif lettering of the actual "Mehmed" wordmark on the flour packaging, while still reading as a clean web font rather than a literal logo copy
-- Body/UI font: a clean grotesque sans (placeholder: **Inter** or **Plus Jakarta Sans**) — contrasts with the display serif the same way the packaging pairs its bold logotype with simple sans-serif label text ("Fresh • Hygienic • Refreshing," "Net Weight")
-- The client's actual logo files (vector/high-res) should replace the text-based placeholder wordmark before launch; see [Section 8](#8-open-items--assumptions)
+Measured directly from the live template rather than assumed:
+- **Inter** for everything — headings and body both. There is no separate "display font."
+- Headings are huge, tight-tracked, and **weight 400** (not bold): see `.h1` / `.h2` utility classes in `app/globals.css` (h1 ~72–96px depending on breakpoint, h2 ~56–64px, both at roughly `-0.03em` letter-spacing).
+- **Instrument Serif (italic)** is the accent font for emphasis phrases inside headings — e.g. "Every Bite", "Seriously Delicious" in the template become "**Trust You Can Rely On**", "**Rolling with Quality**" for Mehmed. Content authors mark the accented phrase by wrapping it in `**double asterisks**` in any heading field; `components/sections/Accent.tsx`'s `renderHeading()` splits on that and renders the marked phrase in italic serif. The accent's color must be passed explicitly per call site (`text-primary` on white backgrounds, `text-lime` on dark/photo backgrounds) since there's no single default that works on both — get this wrong and the accent text becomes invisible (this happened once during the rebuild and was caught by visual QA, not the type system).
+- The client's actual logo files (vector/high-res) should replace the text wordmark before launch; see [Section 8](#8-open-items--assumptions).
 
-### 5.3 Animation & interaction patterns (copied from the template)
+### 5.3 Layout patterns cloned from the template (not just "inspired by")
+
+- **Buttons are fully pill-shaped** (`rounded-full`) everywhere, no exceptions — solid primary, solid lime, or outline variants, all via `components/sections/Button.tsx`.
+- **Header** floats as a white rounded pill bar inset from the page edges (not a full-width bar), positioned `absolute` over the hero so it scrolls away with the page rather than staying sticky — matches the template's actual behavior (confirmed by screenshot: the header does not reappear once scrolled past).
+- **Hero** is a full-bleed photo with a dark gradient scrim, two floating white "widget" cards near the top (adapted from the template's live avatar-count/map widgets into static, honestly-sourced badges — "Soft Roti for 7 Hours" and "Delivering To: Lahore & Nearby Areas" — see [Section 8](#8-open-items--assumptions) for why these aren't literal clones of the original widgets), and the headline/CTAs anchored to the bottom of the photo. On mobile this collapses from absolute-positioned corners into a single stacked flex column — the first version of this didn't, and the floating cards and CTA buttons overlapped the headline text illegibly on narrow screens until caught in mobile QA and fixed.
+- **Product/menu section**: full-bleed primary-green background with a white rounded card "floating" on top of it, containing the actual product grid — not a plain grid on a plain background.
+- **Feature sections** come in the template's two variants, both implemented as one `feature_grid` section type with a `style: "light" | "dark"` field: "light" is centered heading above a 4-card lime grid on white ("Why Choose Us"); "dark" is a heading beside a 2×2 lime icon grid on a full-bleed primary-green background ("Features").
+- **Stats** render as a single compact lime pill with multiple big numbers side by side (matching the template's "50+ cities visited / 100K+ happy tummies" widget nested under the About section's CTA), not a full-width band of separate cards.
+- **Forms** use a shared borderless, cream-filled input style; the quote/booking form specifically clones the template's two-column "Book Us" layout, including the dark info card with a small circular badge overlapping its top-right corner.
+- **Footer** is a full-bleed primary-green band: a simple centered nav-link row, a short paragraph, a huge two-tone brand wordmark, and a lime bottom bar with the copyright line — not a conventional multi-column contact-info footer.
+
+### 5.4 Animation & interaction patterns
 Reproduced with Framer Motion + Embla:
-- **Scroll reveal:** section headings and cards fade + slide up (~20px) on scroll into view, staggered ~80–120ms per item within a group (matches the About/Features/Why-Choose-Us grids)
-- **Counters:** stat numbers count up from 0 when the About/stats section enters the viewport
-- **Hover states:** product/feature cards scale slightly (1.02–1.03) and lift with a soft shadow on hover
-- **Slider/carousel:** testimonials and featured-products use a drag/swipe-enabled carousel with autoplay + pause-on-hover, matching the template's testimonial slider behavior
-- **Sticky header:** header condenses/adds background on scroll (present in the template's nav)
-- **CTA banner:** full-bleed colored band with 3 buttons at page bottom, same as the template's "One Bite Away" closing section
+- **Scroll reveal:** section headings and cards fade + slide up (~20px) on scroll into view, staggered ~80ms per item within a group (`components/sections/Reveal.tsx`, used by nearly every renderer)
+- **Counters:** stat numbers count up from 0 when the stats card enters the viewport
+- **Hover states:** buttons and cards get subtle color/lift transitions
+- **Slider/carousel:** testimonials use an Embla carousel with autoplay + pause-on-hover + dot navigation
 
-### 5.4 Imagery
-- **Whole Wheat Flour and Rizqan Sugarcane Juice** now have real product packshots (the photos the client supplied) — these are used directly as the actual product images on the Products page and homepage featured-products grid, not placeholders.
-- **Mehmed Rice** has no packaging photo yet — its product card uses a clearly-labeled stock placeholder (rice grains) until real packaging is supplied.
-- **Hero/lifestyle imagery** (people, stores, delivery, facility) is still stock placeholder — the client only supplied product packshots, not lifestyle/facility photography.
-- Every placeholder image gets descriptive `alt` text so swapping in real photos later doesn't require touching markup.
-- A `/gallery` and facility/delivery photo shoot is flagged as a pre-launch dependency in [Section 8](#8-open-items--assumptions).
+### 5.5 Imagery
+- **Whole Wheat Flour and Rizqan Sugarcane Juice** product cards use the real packshots once uploaded via the dashboard (upload pipeline works — see PLAN.md §2 Admin shell); until then, a "Photo coming soon" placeholder shows rather than a broken image.
+- **Mehmed Rice** has no packaging photo yet — same placeholder treatment.
+- **Hero and CTA-banner photography** uses real, freely-licensed Unsplash stock (wheat field, rice paddy, grocery shelves — specific URLs in each section's renderer) as an honest stand-in for real facility/lifestyle photography, which doesn't exist yet. These are swapped for real photos the same way product images are — via the `image_url` field in each section's content, editable from the Pages dashboard.
+- Every image gets descriptive `alt` text.
+- A `/gallery` page and a real facility/delivery photo shoot remain a pre-launch dependency; see [Section 8](#8-open-items--assumptions).
 
 ---
 

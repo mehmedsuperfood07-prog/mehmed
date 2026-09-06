@@ -15,7 +15,7 @@ export default async function AdminCategoriesPage() {
         <Link href="/admin/products" className="text-sm text-primary hover:text-primary-dark">
           ← Back to Products
         </Link>
-        <h1 className="mt-2 font-display text-2xl text-ink">Product Categories</h1>
+        <h1 className="mt-2 text-2xl text-ink">Product Categories</h1>
       </div>
       <CategoryManager categories={categories ?? []} />
     </div>

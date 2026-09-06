@@ -68,6 +68,25 @@ export function SectionEditorFields({
           );
         }
 
+        if (field.type === "select") {
+          return (
+            <div key={field.key}>
+              <label className="block text-sm font-medium text-ink">{field.label}</label>
+              <select
+                value={(value as string) ?? field.options[0]}
+                onChange={(event) => setField(field.key, event.target.value)}
+                className={inputClass}
+              >
+                {field.options.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          );
+        }
+
         if (field.type === "boolean") {
           return (
             <label key={field.key} className="flex items-center gap-2 text-sm text-ink">

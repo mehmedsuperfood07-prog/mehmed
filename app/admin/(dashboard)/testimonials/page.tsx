@@ -11,7 +11,7 @@ export default async function AdminTestimonialsPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h1 className="font-display text-2xl text-ink">Testimonials</h1>
+        <h1 className="text-2xl text-ink">Testimonials</h1>
         <p className="mt-1 text-sm text-ink/60">Manage the quotes shown in the testimonial slider.</p>
       </div>
       <TestimonialManager testimonials={testimonials ?? []} />

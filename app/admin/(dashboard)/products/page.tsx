@@ -12,7 +12,7 @@ export default async function AdminProductsListPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl text-ink">Products</h1>
+          <h1 className="text-2xl text-ink">Products</h1>
           <p className="mt-1 text-sm text-ink/60">Manage the products shown on the site.</p>
         </div>
         <div className="flex items-center gap-3">

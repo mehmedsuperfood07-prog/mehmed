@@ -28,7 +28,7 @@ export default async function AdminOverviewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl text-ink">Overview</h1>
+        <h1 className="text-2xl text-ink">Overview</h1>
         <p className="mt-1 text-sm text-ink/60">
           A quick look at what&apos;s happening on the site.
         </p>
@@ -41,7 +41,7 @@ export default async function AdminOverviewPage() {
             className="rounded-2xl border border-black/5 bg-surface p-6"
           >
             <p className="text-sm text-ink/60">{stat.label}</p>
-            <p className="mt-2 font-display text-3xl text-ink">{stat.value}</p>
+            <p className="mt-2 text-3xl text-ink">{stat.value}</p>
           </div>
         ))}
       </div>

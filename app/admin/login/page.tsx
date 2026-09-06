@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
         className="w-full max-w-sm space-y-5 rounded-2xl border border-black/5 bg-surface p-8 shadow-sm"
       >
         <div>
-          <h1 className="font-display text-2xl text-ink">Mehmed Super Foods</h1>
+          <h1 className="text-2xl text-ink">Mehmed Super Foods</h1>
           <p className="mt-1 text-sm text-ink/60">Sign in to the dashboard</p>
         </div>
 

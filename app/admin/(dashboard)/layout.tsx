@@ -32,7 +32,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
     <div className="flex min-h-screen bg-cream">
       <aside className="flex w-64 shrink-0 flex-col border-r border-black/5 bg-surface">
         <div className="border-b border-black/5 px-6 py-5">
-          <p className="font-display text-lg text-ink">Mehmed Super Foods</p>
+          <p className="text-lg text-ink">Mehmed Super Foods</p>
           <p className="mt-0.5 text-xs text-ink/50">Admin dashboard</p>
         </div>
         <nav className="flex-1 space-y-1 px-3 py-4">

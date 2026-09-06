@@ -35,7 +35,7 @@ export default function NewPagePage() {
 
   return (
     <div className="max-w-lg space-y-6">
-      <h1 className="font-display text-2xl text-ink">New Page</h1>
+      <h1 className="text-2xl text-ink">New Page</h1>
       <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-black/5 bg-surface p-6">
         {error && <p className="rounded-lg bg-red/10 px-3 py-2 text-sm text-red">{error}</p>}
         <div>

@@ -16,10 +16,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/5 bg-surface/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-display text-xl text-ink">
-          Mehmed <span className="text-primary">Super Foods</span>
+    <header className="absolute inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-white px-4 py-3 shadow-[0_2px_20px_rgba(0,0,0,0.06)] sm:px-6">
+        <Link href="/" className="text-lg font-medium text-ink">
+          Mehmed<span className="text-primary">SuperFoods</span>
         </Link>
 
         <nav className="hidden gap-8 sm:flex">
@@ -27,7 +27,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-ink/70 transition-colors hover:text-primary"
+              className="text-[15px] text-ink-soft transition-colors hover:text-ink"
             >
               {item.label}
             </Link>
@@ -36,7 +36,7 @@ export function Header() {
 
         <Link
           href="/contact"
-          className="hidden rounded-lg bg-primary px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-dark sm:inline-block"
+          className="hidden rounded-full bg-primary px-6 py-2.5 text-[15px] text-white transition-colors hover:bg-primary-dark sm:inline-block"
         >
           Get a Quote
         </Link>
@@ -54,13 +54,13 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-black/5 bg-surface px-6 py-4 sm:hidden">
+        <nav className="mx-auto mt-2 flex max-w-6xl flex-col gap-1 rounded-3xl bg-white p-4 shadow-[0_2px_20px_rgba(0,0,0,0.06)] sm:hidden">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="rounded-lg px-2 py-2 text-sm font-medium text-ink/80 hover:bg-cream"
+              className="rounded-lg px-3 py-2 text-[15px] text-ink-soft hover:bg-cream hover:text-ink"
             >
               {item.label}
             </Link>
