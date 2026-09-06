@@ -71,13 +71,17 @@ npm run start    # run a production build locally
 npm run lint     # eslint
 ```
 
-Supabase CLI commands (migrations, `db push`, type generation) will be added here once the schema work starts — see PLAN.md §3.3.
+```
+npx supabase migration list                              # compare local vs. remote migrations
+npx supabase db push                                      # apply new migrations to the linked project
+npx supabase gen types typescript --linked > lib/supabase/types.ts   # regenerate types after any schema change
+```
 
 ## Current state
 
 - Next.js 16 (App Router) + TypeScript + Tailwind v4 scaffolded, brand palette wired into `app/globals.css` as theme tokens (`bg-primary`, `text-maroon`, `bg-cream`, etc.), fonts set to Fraunces (display) + Inter (body)
 - `.env.local` holds real Supabase project credentials (URL, anon key, service role key) — already git-ignored and verified not tracked; `RESEND_API_KEY` and `ADMIN_ALLOWED_EMAILS` still blank pending the Resend account
-- Database schema written as `supabase/migrations/20260906120000_init_schema.sql` (all 8 tables from PLAN.md §3.3, RLS policies, singleton `site_settings` row seeded) — **not yet applied to the live Supabase project**, since the Supabase CLI isn't linked yet (no `supabase login` done). Apply it either via `supabase link` + `supabase db push` once linked, or by pasting the file into the Supabase Dashboard's SQL Editor
-- `lib/supabase/{client,server,admin}.ts` set up (browser client, session-aware server client, service-role admin client); `lib/supabase/types.ts` is hand-written to match the migration and should be replaced with `supabase gen types typescript` output once the CLI is linked
+- Database schema written as `supabase/migrations/20260906120000_init_schema.sql` (all 8 tables from PLAN.md §3.3, RLS policies, singleton `site_settings` row seeded) and **applied to the live Supabase project** — CLI is logged in and linked (`npx supabase login` / `npx supabase link --project-ref afyliettjdyjcavbaqgg`; the ref lives in `supabase/.temp/`, which is git-ignored and regenerates from a re-link if ever missing). Future schema changes: add a new migration file, run `npx supabase db push`, then regenerate types (next bullet) — don't hand-edit the live schema from the dashboard and let it drift from the migration files
+- `lib/supabase/{client,server,admin}.ts` set up (browser client, session-aware server client, service-role admin client). `lib/supabase/types.ts` is now real CLI-generated output (`npx supabase gen types typescript --linked > lib/supabase/types.ts`) — regenerate it the same way after every migration, don't hand-edit it. Note the CHECK-constraint columns (`status`, `type`, etc.) come through as plain `string`, not narrowed unions — Supabase's generator only reflects real Postgres `enum` types, not `check` constraints
 - `proxy.ts` (not `middleware.ts` — see above) gates `/admin/*` on an authenticated session matching `ADMIN_ALLOWED_EMAILS`; no admin UI or login page exists yet, so this currently just redirects every `/admin/*` request to a `/admin/login` page that doesn't exist yet
 - No admin dashboard, section-library components, or real public pages built yet — the homepage is still the default create-next-app starter page. Next unit of work: apply the migration, then build the admin login + dashboard shell (PLAN.md §7 Phase 2)
