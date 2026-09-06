@@ -17,7 +17,8 @@ export type SectionType =
   | "faq_accordion"
   | "gallery"
   | "contact_form"
-  | "quote_form";
+  | "quote_form"
+  | "logo_carousel";
 
 export type HeroContent = {
   eyebrow?: string;
@@ -102,6 +103,18 @@ export type QuoteFormContent = {
   info_items?: string[];
 };
 
+// A missed section from the template's homepage -- a "trusted by" band of
+// partner/client logos right below the Hero. Content is generic business
+// categories rather than fabricated specific client names, since Mehmed's
+// actual retail customers (small shops, bakeries) don't have logos worth
+// showing and we don't have real named partners to display -- same
+// no-fabrication principle as everywhere else (PLAN.md section 8). Swap in
+// real partner/distributor logos via `image_url` once they exist.
+export type LogoCarouselContent = {
+  heading?: string;
+  logos: { label: string; image_url?: string }[];
+};
+
 export type SectionContentMap = {
   hero: HeroContent;
   rich_text: RichTextContent;
@@ -116,6 +129,7 @@ export type SectionContentMap = {
   gallery: GalleryContent;
   contact_form: ContactFormContent;
   quote_form: QuoteFormContent;
+  logo_carousel: LogoCarouselContent;
 };
 
 // Field schema for the generic admin editor (components/admin/section-editor).

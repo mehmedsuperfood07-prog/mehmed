@@ -14,6 +14,7 @@ export const SECTION_LABELS: Record<SectionType, string> = {
   gallery: "Gallery",
   contact_form: "Contact Form",
   quote_form: "Quote Form",
+  logo_carousel: "Logo Carousel",
 };
 
 const HEADING_HINT = "wrap a phrase in **double asterisks** for the italic accent style";
@@ -136,6 +137,19 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     { key: "info_heading", label: "Info card heading", type: "text", optional: true },
     { key: "info_items", label: "Info card checklist (one per line)", type: "list", itemLabel: "Item" },
   ],
+  logo_carousel: [
+    { key: "heading", label: "Heading (optional)", type: "text", optional: true },
+    {
+      key: "logos",
+      label: "Logos",
+      type: "repeater",
+      itemLabel: "Logo",
+      fields: [
+        { key: "label", label: "Name", type: "text" },
+        { key: "image_url", label: "Logo image (optional -- shows a placeholder badge if empty)", type: "image", optional: true },
+      ],
+    },
+  ],
 };
 
 export const SECTION_DEFAULT_CONTENT: SectionContentMap = {
@@ -152,4 +166,5 @@ export const SECTION_DEFAULT_CONTENT: SectionContentMap = {
   gallery: { images: [] },
   contact_form: { heading: "Send us a message" },
   quote_form: { heading: "Request a Bulk Quote" },
+  logo_carousel: { logos: [] },
 };

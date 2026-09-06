@@ -274,6 +274,19 @@ async function main() {
         },
       },
       {
+        type: "logo_carousel",
+        content: {
+          heading: "Trusted By",
+          logos: [
+            { label: "General Stores" },
+            { label: "Departmental Stores" },
+            { label: "Bakeries" },
+            { label: "Factories & Canteens" },
+            { label: "Distributors" },
+          ],
+        },
+      },
+      {
         type: "image_with_text",
         content: {
           heading: "A Household Name in **Quality Staples**",
