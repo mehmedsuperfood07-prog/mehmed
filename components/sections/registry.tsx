@@ -12,6 +12,9 @@ import { Gallery } from "./Gallery";
 import { ContactForm } from "./ContactForm";
 import { QuoteForm } from "./QuoteForm";
 import { LogoCarousel } from "./LogoCarousel";
+import { PageHeader } from "./PageHeader";
+import { ContactInfo } from "./ContactInfo";
+import { ProductList } from "./ProductList";
 import type { SectionContentMap, SectionType } from "./types";
 
 type SectionRendererProps<T extends SectionType> = { content: SectionContentMap[T] };
@@ -32,4 +35,7 @@ export const SECTION_RENDERERS: { [K in SectionType]: (props: SectionRendererPro
   contact_form: ContactForm,
   quote_form: QuoteForm,
   logo_carousel: LogoCarousel,
+  page_header: PageHeader,
+  contact_info: ContactInfo,
+  product_list: ProductList,
 };

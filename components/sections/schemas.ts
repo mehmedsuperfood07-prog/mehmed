@@ -15,6 +15,9 @@ export const SECTION_LABELS: Record<SectionType, string> = {
   contact_form: "Contact Form",
   quote_form: "Quote Form",
   logo_carousel: "Logo Carousel",
+  page_header: "Page Header",
+  contact_info: "Contact Info List",
+  product_list: "Product List (grouped by category)",
 };
 
 const HEADING_HINT = "wrap a phrase in **double asterisks** for the italic accent style";
@@ -150,6 +153,20 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
       ],
     },
   ],
+  page_header: [
+    { key: "title", label: "Title (large text over the photo)", type: "text" },
+    { key: "heading", label: `Panel heading (${HEADING_HINT})`, type: "text" },
+    { key: "body", label: "Panel body", type: "textarea", optional: true },
+    { key: "image_url", label: "Photo", type: "image", optional: true },
+  ],
+  contact_info: [
+    { key: "eyebrow", label: "Eyebrow", type: "text", optional: true },
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
+  ],
+  product_list: [
+    { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
+    { key: "subheading", label: "Subheading", type: "textarea", optional: true },
+  ],
 };
 
 export const SECTION_DEFAULT_CONTENT: SectionContentMap = {
@@ -167,4 +184,7 @@ export const SECTION_DEFAULT_CONTENT: SectionContentMap = {
   contact_form: { heading: "Send us a message" },
   quote_form: { heading: "Request a Bulk Quote" },
   logo_carousel: { logos: [] },
+  page_header: { title: "Page Title", heading: "Heading" },
+  contact_info: { heading: "Let's Connect" },
+  product_list: { heading: "Our Products" },
 };

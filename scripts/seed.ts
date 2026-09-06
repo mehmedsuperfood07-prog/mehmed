@@ -392,16 +392,16 @@ async function main() {
       "Explore Mehmed Super Foods' full product line: whole wheat flour, rice, and Rizqan sugarcane juice.",
     sections: [
       {
-        type: "hero",
+        type: "page_header",
         content: {
-          headline: "Staples Worth **Stocking**",
-          subheadline:
-            "Whole wheat flour, rice, and Rizqan sugarcane juice — packed fresh for shops, bakeries, and factories across Lahore.",
+          title: "Our Products",
+          heading: "Staples Worth **Stocking**",
+          body: "Whole wheat flour, rice, and Rizqan sugarcane juice — packed fresh for shops, bakeries, and factories across Lahore.",
         },
       },
       {
-        type: "product_grid",
-        content: { heading: "All of Our **Products**", featured_only: false },
+        type: "product_list",
+        content: { heading: "All of Our **Products**" },
       },
       {
         type: "quote_form",
@@ -422,10 +422,11 @@ async function main() {
     seo_description: "Learn about Mehmed Super Foods' commitment to quality staples, from sourcing to your shop shelf.",
     sections: [
       {
-        type: "hero",
+        type: "page_header",
         content: {
-          headline: "A Household Name in **Quality Staples**",
-          subheadline: "A commitment to quality staples, from sourcing to your shop shelf.",
+          title: "About Us",
+          heading: "A Household Name in **Quality Staples**",
+          body: "A commitment to quality staples, from sourcing to your shop shelf.",
         },
       },
       {
@@ -479,10 +480,18 @@ async function main() {
     seo_description: "Get in touch with Mehmed Super Foods for product inquiries, pricing, or bulk orders.",
     sections: [
       {
-        type: "hero",
+        type: "page_header",
         content: {
-          headline: "Let's **Get in Touch**",
-          subheadline: "Questions about our products, pricing, or delivery? We're here to help.",
+          title: "Contact Us",
+          heading: "Let's **Get in Touch**",
+          body: "Questions about our products, pricing, or delivery? We're here to help.",
+        },
+      },
+      {
+        type: "contact_info",
+        content: {
+          eyebrow: "Let's Connect",
+          heading: "We're here to help with **product, pricing, or delivery questions**",
         },
       },
       {
@@ -506,8 +515,12 @@ async function main() {
     seo_description: "Common questions about Mehmed Super Foods' products, delivery, and bulk ordering.",
     sections: [
       {
-        type: "hero",
-        content: { headline: "Frequently **Asked Questions**" },
+        type: "page_header",
+        content: {
+          title: "FAQ",
+          heading: "Frequently **Asked Questions**",
+          body: "Common questions about our products, delivery, and bulk ordering.",
+        },
       },
       {
         type: "faq_accordion",
@@ -551,10 +564,11 @@ async function main() {
     seo_description: "What shopkeepers, bakeries, and factories across Lahore say about Mehmed Super Foods.",
     sections: [
       {
-        type: "hero",
+        type: "page_header",
         content: {
-          headline: "What Our **Customers Say**",
-          subheadline: "Feedback from shopkeepers, bakeries, and factories we supply across Lahore.",
+          title: "Reviews",
+          heading: "What Our **Customers Say**",
+          body: "Feedback from shopkeepers, bakeries, and factories we supply across Lahore.",
         },
       },
       {
@@ -579,11 +593,11 @@ async function main() {
       "Become a Mehmed Super Foods stockist or bulk distributor — general stores, departmental stores, bakeries, and factories across Lahore.",
     sections: [
       {
-        type: "hero",
+        type: "page_header",
         content: {
-          headline: "Bring Mehmed to **Your Shelves**",
-          subheadline:
-            "Partner with Mehmed Super Foods to stock quality whole wheat flour, rice, and Rizqan sugarcane juice at your store or facility.",
+          title: "Become a Distributor",
+          heading: "Bring Mehmed to **Your Shelves**",
+          body: "Partner with Mehmed Super Foods to stock quality whole wheat flour, rice, and Rizqan sugarcane juice at your store or facility.",
         },
       },
       {

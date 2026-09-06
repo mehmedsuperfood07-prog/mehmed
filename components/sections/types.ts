@@ -18,7 +18,10 @@ export type SectionType =
   | "gallery"
   | "contact_form"
   | "quote_form"
-  | "logo_carousel";
+  | "logo_carousel"
+  | "page_header"
+  | "contact_info"
+  | "product_list";
 
 export type HeroContent = {
   eyebrow?: string;
@@ -115,6 +118,35 @@ export type LogoCarouselContent = {
   logos: { label: string; image_url?: string }[];
 };
 
+// The template's actual inner-page hero -- About/Menu/Contact all use this
+// split photo+title / info-panel layout, NOT the homepage's Hero (no
+// floating widget cards, no CTAs). Was conflated with `hero` until a
+// page-by-page audit caught it -- see PLAN.md section 5.
+export type PageHeaderContent = {
+  title: string;
+  heading: string;
+  body?: string;
+  image_url?: string;
+};
+
+// The template's Contact page has a distinct divided-row info list (Head
+// Office / Phone / Email / Hours, values in the italic accent font) that
+// was missing entirely. Values are read live from site_settings, not
+// duplicated into section content -- same single-source-of-truth pattern
+// as Footer.tsx.
+export type ContactInfoContent = {
+  eyebrow?: string;
+  heading: string;
+};
+
+// The template's Menu page groups products by category (image beside a
+// list of lime row-cards), a different pattern from ProductGrid's flat
+// grid (which matches the homepage's "Best Sellers" section, not this).
+export type ProductListContent = {
+  heading?: string;
+  subheading?: string;
+};
+
 export type SectionContentMap = {
   hero: HeroContent;
   rich_text: RichTextContent;
@@ -130,6 +162,9 @@ export type SectionContentMap = {
   contact_form: ContactFormContent;
   quote_form: QuoteFormContent;
   logo_carousel: LogoCarouselContent;
+  page_header: PageHeaderContent;
+  contact_info: ContactInfoContent;
+  product_list: ProductListContent;
 };
 
 // Field schema for the generic admin editor (components/admin/section-editor).
