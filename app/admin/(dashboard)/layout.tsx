@@ -9,6 +9,7 @@ import { SignOutButton } from "./sign-out-button";
 // -- see PLAN.md section 7 and CLAUDE.md "Current state".
 const NAV_ITEMS = [
   { href: "/admin", label: "Overview" },
+  { href: "/admin/pages", label: "Pages" },
   { href: "/admin/leads", label: "Leads" },
 ];
 

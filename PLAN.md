@@ -265,16 +265,16 @@ Custom equivalent of RankMath/Yoast, since we're not using WordPress:
 
 ## 7. Delivery Phases
 
-1. **Foundations** — repo scaffold, Tailwind theme tokens (with placeholder palette), Supabase project + schema + RLS policies, admin auth
-2. **Admin shell** — dashboard layout, page/section CRUD, product & category CRUD, image upload pipeline
-3. **Public site — static structure** — header/footer, all section components from the library, wired to real DB data (with placeholder content)
-4. **Public site — content pages** — Home, Products, About, Contact, Become a Distributor, Gallery, Reviews, FAQ
-5. **Blog** — Tiptap editor in dashboard, public listing/detail pages
-6. **Lead generation** — forms wired to `leads` table + Resend notifications + dashboard inbox
-7. **SEO pass** — metadata wiring, sitemap/robots routes, JSON-LD, per-page SEO fields in dashboard
-8. **Content population** — dummy copy replaced with client-approved copy; placeholder images swapped where real ones are supplied
-9. **QA** — responsive pass (mobile/tablet/desktop), animation performance, form validation edge cases, Lighthouse pass
-10. **Deploy & handover** — Vercel production deploy, custom domain, analytics, short admin-dashboard walkthrough for the client
+1. **Foundations** — ✅ done. Repo scaffold, Tailwind theme tokens (real confirmed palette, not placeholder), Supabase project + schema + RLS policies, admin auth.
+2. **Admin shell** — mostly done. Dashboard layout, auth, Leads inbox, and full Pages/section CRUD (generic schema-driven section editor, not a bespoke editor per type) are built. **Not yet built:** dedicated Products & category CRUD screens (products are currently seeded via `scripts/seed.ts`, not dashboard-editable) and the image upload pipeline (no Supabase Storage wiring yet — every image is a null placeholder).
+3. **Public site — static structure** — ✅ done. Header/footer and all 13 section-library components exist, wired to real DB data.
+4. **Public site — content pages** — partially done. Home, Products, About, Contact exist as real seeded pages. **Not yet built:** Become a Distributor, Gallery, Reviews, FAQ.
+5. **Blog** — not started. Still planned as Tiptap in the dashboard + public listing/detail pages.
+6. **Lead generation** — partially done. Contact form and the bulk-quote form are fully wired end-to-end (verified live: a real test submission was inserted into `leads` and appeared correctly) and show up in the dashboard inbox. **Not yet done:** Resend email notifications (no Resend account yet).
+7. **SEO pass** — partially done. Per-page SEO fields (title/description/no-index) exist in the schema and the Pages CRUD form, and `generateMetadata` wires them through. **Not yet built:** sitemap.xml/robots.txt routes, JSON-LD structured data.
+8. **Content population** — in progress. Home/Products/About/Contact carry real seeded copy (grounded in confirmed product facts, no fabricated stats — see section 8's note on this). Still placeholder: all imagery, Mehmed Rice specifics, contact details, testimonials.
+9. **QA** — not started.
+10. **Deploy & handover** — not started. No Vercel deployment yet (project exists but isn't linked/deployed); no custom domain attached.
 
 ---
 
@@ -284,12 +284,14 @@ Flagged explicitly rather than silently guessed:
 
 - **Color palette:** ✅ resolved — confirmed from the flour and Rizqan packaging photos (Section 5.1)
 - **Flour and Rizqan product facts:** ✅ resolved — pack size, tagline, and flavor names taken from real packaging (Section 2.2)
-- **Mehmed Rice packaging/branding:** not yet supplied. Rice product cards use placeholder variants (Sella/Basmati) and inherit the site-wide palette; revisit if the client's real rice packaging suggests a different color story
+- **Mehmed Rice packaging/branding:** not yet supplied. The seeded product card deliberately avoids naming a specific variety (no invented "Sella"/"Basmati" claims) and has no pack-size chips, since none of that is confirmed — it inherits the site-wide palette; revisit if the client's real rice packaging suggests a different color story
+- **No fabricated numeric business claims:** seeded copy (stats, "why choose us" feature descriptions) is intentionally qualitative, not specific invented figures like "10+ years" or "500+ retail partners" — those would be misleading if published to a real domain even as placeholder. The `stats_counter` section component exists and works but isn't used on the seeded pages for this reason; add it once the client supplies real numbers
 - **Real logo files:** the packaging shows the "Mehmed" and "Rizqan" wordmarks, but we don't yet have vector/high-res logo files (for favicon, header, print-quality use) — request these directly rather than recreating the logo from the packaging photo
 - **Real contact details** (address, phone, WhatsApp, email, hours): all placeholder, must be replaced before launch
 - **Other flour pack sizes** (10kg/20kg, etc.) beyond the confirmed 5kg bag: placeholder until confirmed
 - **Certifications:** the flour packaging's "Soft Roti for 7 Hours" and Rizqan's "100% Natural, Nothing Added" are marketing claims already on-package and safe to reuse; any *regulatory* certification marks (FSSAI/Halal/PSQCA-equivalent) should still be confirmed before adding separate certification badges
 - **Product/facility photography:** the packaging photos cover product shots, but we still need facility/delivery/team photography for Gallery and About pages — stock placeholders used until then
+- **Getting the flour/Rizqan packaging photos onto the actual site:** those photos were shared inline in chat, which doesn't give Claude a file to upload — every product's `image_url` is currently null. To get them live, either share the image files directly (not pasted inline) or wait for the Supabase Storage upload flow to be built in the dashboard (not started yet)
 - **Domain name:** ✅ resolved — [mehmedsuperfood.pk](https://mehmedsuperfood.pk/), owned by the client. Attach to the Vercel project during deploy (Phase 10)
 - **Resend account:** not yet created — needed before the lead-generation phase (Phase 6), not blocking earlier phases
 - **Testimonials:** need real (or at least client-approved) quotes before launch; placeholders are clearly fictional in the meantime

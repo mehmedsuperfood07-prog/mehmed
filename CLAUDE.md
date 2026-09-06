@@ -18,25 +18,29 @@ If you're ever unsure which account a tool call would hit, ask rather than assum
 
 ## Stack
 
-Next.js (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres/Auth/Storage) + Framer Motion + Embla Carousel + shadcn/ui + react-hook-form/zod + Tiptap + Resend. Deployed on Vercel. Full rationale in PLAN.md §4.
+Next.js (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres/Auth/Storage) + Framer Motion + Embla Carousel + react-hook-form/zod. Deployed on Vercel. Full rationale in PLAN.md §4.
+
+Two items from the original plan are deliberately deferred, not forgotten: **shadcn/ui** was skipped so far because plain Tailwind markup covered every form/dialog/accordion built to date without the extra dependency — reconsider it if a real need shows up (e.g. a genuinely complex dialog). **Tiptap** is still the right call for the Blog editor (Phase 5, not built yet); page-section rich text uses a plain textarea split on blank lines instead, which is enough for section copy but not a real editor. **Resend** is not wired in yet (no account/API key) — the `submitLead` action has a `TODO` where that call goes; leads still work end-to-end without it (see below).
 
 ## Where things live
 
-- `/app/(site)/*` — public pages, shared header/footer via the `(site)` layout
+- `/app/(site)/*` — public pages. `page.tsx` (home, fetches slug `"home"`) and `[slug]/page.tsx` (every other page) both go through `lib/pages.ts`'s `getPageBySlug`/`pageMetadata` and render via `components/sections/PageSections.tsx`. `layout.tsx` here wraps with `components/site/Header.tsx` + `Footer.tsx` — the admin routes deliberately don't get this layout.
 - `/app/admin/*` — the custom dashboard, auth-gated via `proxy.ts` (Next.js 16 renamed the `middleware.ts` convention to `proxy.ts` — the exported function is `proxy`, not `middleware`; don't recreate a `middleware.ts` file out of habit)
-- `/components/sections/*` — one component per section-library type (Hero, RichText, ProductGrid, TestimonialSlider, etc. — see PLAN.md §3.1). Public pages are assembled by rendering a page's `page_sections` rows through this library, not by hand-writing bespoke page markup.
-- `/components/admin/*` — dashboard-only UI (block editors, forms)
-- `/components/ui/*` — shadcn/ui primitives
-- `/lib/supabase/*` — Supabase clients + generated types (regenerate types after any schema change — the Supabase MCP tools in this environment can do this directly)
-- `/lib/validations/*` — zod schemas shared between client forms and server actions
-- `/lib/email/*` — Resend client/templates
+- `/app/actions/leads.ts` — the one shared `submitLead` server action every lead form calls (general contact + bulk quote so far; a future distributor page reuses it too)
+- `/components/sections/*` — the closed section library (PLAN.md §3.1): `types.ts` (content shape + `FieldSchema` per type), `schemas.ts` (admin field schema + default content per type), `registry.tsx` (type → public renderer, used by `PageSections.tsx`), then one renderer file per type (`Hero.tsx`, `RichText.tsx`, `ProductGrid.tsx`, `TestimonialSlider.tsx` + its client-side `TestimonialCarousel.tsx`, `ContactForm.tsx`, `QuoteForm.tsx` + `QuoteFormFields.tsx`, etc.). `Reveal.tsx` is the shared scroll-reveal wrapper nearly every renderer uses.
+- `/components/admin/SectionEditorFields.tsx` — the one generic, recursive form that edits ANY section's JSON content by reading its `FieldSchema[]` from `schemas.ts`. This is why there's no per-type admin editor component — don't add one; extend the field schema instead.
+- `/components/site/*` — `Header.tsx` (nav is hardcoded to match the pages actually seeded — see its own comment) and `Footer.tsx` (reads `site_settings`).
+- `/lib/supabase/*` — `client.ts`/`server.ts` (session-aware, RLS-respecting) and `admin.ts` (service-role, bypasses RLS, `server-only`-guarded — **do not import `admin.ts` from a standalone Node script**; `server-only` throws unconditionally outside Next's build, which only aliases it to a no-op for server bundles. `scripts/seed.ts` constructs its own `createClient` from `@supabase/supabase-js` instead — copy that pattern for future one-off scripts). `types.ts` is real CLI-generated output.
+- `/lib/pages.ts` — `getPageBySlug` + `pageMetadata`, shared by every public page route.
+- `/lib/validations/leads.ts` — zod schemas (`generalLeadSchema`, `quoteLeadSchema`) shared between the client forms and `submitLead`.
+- `/scripts/seed.ts` — idempotent content seed (run via `npm run seed`). Deliberately does NOT invent specific numeric business claims (years in business, partner counts) — see its own header comment and PLAN.md §8. Re-run it any time to reset seeded pages/products/testimonials/site_settings back to this baseline; it replaces a page's sections wholesale rather than diffing, so don't run it against a page an admin has hand-edited unless you mean to overwrite those edits.
 
 ## Working conventions
 
 - **Section library is closed by design.** Adding a new page from the dashboard means composing existing section types, not writing new markup per page. Only add a new section type to `/components/sections` when a real page genuinely needs a layout none of the existing types cover — check PLAN.md §3.1's list first.
 - **Colors are theme tokens, not literals.** The palette in PLAN.md §5.1 is confirmed (derived from real Mehmed flour and Rizqan juice packaging), but Mehmed Rice packaging hasn't been supplied yet — every color must still go through Tailwind theme tokens (`bg-primary`, `text-maroon`, `text-ink`, etc.) defined in one place, never a hardcoded hex in a component, so if rice packaging later suggests a tweak it's a config change, not a codebase-wide find-and-replace.
 - **All content is DB-driven, not hardcoded.** Copy, images, nav items, contact info, and section content live in Supabase tables (PLAN.md §3.3), edited via the dashboard. Placeholder content still goes through the DB/seed data, not inline JSX strings — that's the difference between "temporary copy" and "the dashboard actually works."
-- **Every lead form behaves the same way**: react-hook-form + zod validation → server action → insert into `leads` → Resend notification → inline success state (no redirect). Don't build a one-off flow per form; extend the shared pattern.
+- **Every lead form behaves the same way**: react-hook-form + zod validation → the shared `submitLead` server action (`app/actions/leads.ts`) → insert into `leads` via the service-role client → inline success state (no redirect). Resend notification is a `TODO` in that same action, not yet wired — don't build a one-off flow per form; extend the shared pattern and its zod schema in `lib/validations/leads.ts`.
 - **SEO fields are mandatory on every content model** that renders a public page (`pages`, `products`, `blog_posts`): seo_title, seo_description, og_image, canonical, no_index. Wire through `generateMetadata`, never skip it "for now."
 - **Images:** always through `next/image`, always with real `alt` text. Placeholder images must be visually plausible stock (wheat/rice/sugarcane categories) — never invented "product photos" implying they're real Mehmed products.
 - **No comments explaining what code does.** Only comment on non-obvious *why* (e.g., a Supabase RLS quirk, a Vercel/serverless constraint). This matches the general Claude Code house style, not something specific to this repo.
@@ -69,6 +73,7 @@ npm run dev      # local dev server (Turbopack), http://localhost:3000
 npm run build    # production build
 npm run start    # run a production build locally
 npm run lint     # eslint
+npm run seed     # idempotent content seed -- see scripts/seed.ts
 ```
 
 ```
@@ -79,10 +84,16 @@ npx supabase gen types typescript --linked > lib/supabase/types.ts   # regenerat
 
 ## Current state
 
-- Next.js 16 (App Router) + TypeScript + Tailwind v4 scaffolded, brand palette wired into `app/globals.css` as theme tokens (`bg-primary`, `text-maroon`, `bg-cream`, etc.), fonts set to Fraunces (display) + Inter (body)
-- `.env.local` holds real Supabase project credentials (URL, anon key, service role key) — already git-ignored and verified not tracked; `RESEND_API_KEY` and `ADMIN_ALLOWED_EMAILS` still blank pending the Resend account
-- Database schema written as `supabase/migrations/20260906120000_init_schema.sql` (all 8 tables from PLAN.md §3.3, RLS policies, singleton `site_settings` row seeded) and **applied to the live Supabase project** — CLI is logged in and linked (`npx supabase login` / `npx supabase link --project-ref afyliettjdyjcavbaqgg`; the ref lives in `supabase/.temp/`, which is git-ignored and regenerates from a re-link if ever missing). Future schema changes: add a new migration file, run `npx supabase db push`, then regenerate types (next bullet) — don't hand-edit the live schema from the dashboard and let it drift from the migration files
-- `lib/supabase/{client,server,admin}.ts` set up (browser client, session-aware server client, service-role admin client). `lib/supabase/types.ts` is now real CLI-generated output (`npx supabase gen types typescript --linked > lib/supabase/types.ts`) — regenerate it the same way after every migration, don't hand-edit it. Note the CHECK-constraint columns (`status`, `type`, etc.) come through as plain `string`, not narrowed unions — Supabase's generator only reflects real Postgres `enum` types, not `check` constraints
-- `proxy.ts` gates `/admin/*` on an authenticated session matching `ADMIN_ALLOWED_EMAILS` (currently just `mehmedsuperfood07@gmail.com`, created manually in Supabase Auth — see PLAN.md §3.1 on the no-public-signup admin model)
-- Admin dashboard shell exists and is verified working end-to-end (redirect-to-login confirmed in a real browser, brand theme rendering correctly): `/admin/login` (sign-in form), `/admin` (overview with live counts), `/admin/leads` (real leads inbox with status updates via a server action). Sidebar nav (`app/admin/(dashboard)/layout.tsx`) intentionally only lists sections that exist — add to `NAV_ITEMS` as each new section ships, don't add dead links ahead of the page existing
-- Not built yet: Pages/section-library CRUD, Products CRUD, Blog, Testimonials, Settings screens, and all real public-facing pages — the public homepage is still the default create-next-app starter page. Next unit of work: the section-library components and Pages CRUD (PLAN.md §7 Phase 2 continuing) so the public site can actually be built page-by-page
+- Next.js 16 (App Router) + TypeScript + Tailwind v4 scaffolded, brand palette wired into `app/globals.css` as theme tokens, fonts set to Fraunces (display) + Inter (body)
+- `.env.local` holds real Supabase project credentials plus `ADMIN_ALLOWED_EMAILS=mehmedsuperfood07@gmail.com`; `RESEND_API_KEY` still blank
+- Database schema applied to the live Supabase project (`supabase/migrations/20260906120000_init_schema.sql`, all 8 tables, RLS policies). CLI is logged in and linked. Future schema changes: new migration file → `npx supabase db push` → regenerate types — don't hand-edit the live schema from the dashboard
+- `proxy.ts` gates `/admin/*` on an authenticated session matching `ADMIN_ALLOWED_EMAILS`; the only admin account is `mehmedsuperfood07@gmail.com`, created manually in Supabase Auth (no public sign-up anywhere — PLAN.md §3.1)
+- **Admin dashboard**, verified end-to-end (build, lint, and a real browser session — though actual sign-in couldn't be tested from here since I don't hold the admin password):
+  - `/admin/login`, `/admin` (overview with live counts), `/admin/leads` (real inbox, status dropdown via server action)
+  - `/admin/pages`, `/admin/pages/new`, `/admin/pages/[id]` — full Pages CRUD: metadata form (title/slug/SEO/status/no-index), and a section manager (add/reorder/remove/edit) built on the generic `SectionEditorFields` form
+  - Sidebar nav (`app/admin/(dashboard)/layout.tsx`) lists Overview/Pages/Leads — extend `NAV_ITEMS` as Products/Blog/Testimonials/Settings screens get built; don't add dead links ahead of the page existing
+- **All 13 section-library types have real renderers** (`components/sections/`): Hero, RichText, ImageWithText, StatsCounter (count-up on scroll), FeatureGrid, ProductGrid (live DB query), CoverageArea, TestimonialSlider (live DB query + Embla carousel), CTABanner, FAQAccordion, Gallery, ContactForm, QuoteForm — the last two fully wired to `submitLead`, not just visual.
+- **Public site is real and seeded**, not the create-next-app starter: `/`, `/products`, `/about`, `/contact` all exist as `pages` rows built from these sections, seeded via `npm run seed` (idempotent, safe to re-run). Verified in a real browser: all four pages render correct content/SEO titles, the contact form was submitted live and confirmed to land in the `leads` table (then deleted as a test row), and `/admin/pages` correctly redirects an unauthenticated visitor to `/admin/login`.
+- **Known gap**: no real images anywhere. The client shared product-packaging *photos* (used to derive the confirmed palette) but not image *files* I can upload — every `image_url` is currently null, and renderers show a "photo coming soon" placeholder rather than a broken image. Getting real photos in requires either the client sending actual files (not pasted inline in chat) or building the Supabase Storage upload flow in the dashboard (not started).
+- **Not built yet**: Products/Blog/Testimonials/Settings CRUD screens (products/testimonials are seeded directly via the script for now, not editable in the dashboard), Resend email notifications, image upload, and the remaining pages from PLAN.md §2 (Gallery, Reviews, FAQ, Become-a-Distributor, blog).
+- Screenshot caveat for future sessions: this session's Browser-pane preview showed a cosmetic sticky-header artifact when scrolling programmatically and screenshotting (header appears to "float" mid-frame). Direct DOM inspection (`getBoundingClientRect`) confirmed the actual page is correct (`position: sticky` computing `top: 0` as expected) — treat it as a preview-tool rendering quirk, not a site bug, unless a real browser confirms otherwise.
