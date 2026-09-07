@@ -37,7 +37,7 @@ export function ContactForm({ content }: { content: ContactFormContent }) {
   }
 
   return (
-    <section className="bg-primary py-20 sm:py-28">
+    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-20 sm:py-28">
       <Container>
         <Reveal>
           {content.heading && (

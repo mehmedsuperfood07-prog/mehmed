@@ -22,7 +22,7 @@ export async function ProductGrid({ content }: { content: ProductGridContent }) 
   const { data: products } = await query;
 
   return (
-    <section className="bg-primary py-20 sm:py-28">
+    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-20 sm:py-28">
       <Container>
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="mb-3 text-sm font-medium uppercase tracking-wide text-lime">

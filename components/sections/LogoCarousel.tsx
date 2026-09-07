@@ -12,7 +12,7 @@ export function LogoCarousel({ content }: { content: LogoCarouselContent }) {
   const track = [...content.logos, ...content.logos];
 
   return (
-    <section className="bg-primary py-14">
+    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-14">
       {content.heading && (
         <Container className="mb-8 text-center">
           <Reveal>

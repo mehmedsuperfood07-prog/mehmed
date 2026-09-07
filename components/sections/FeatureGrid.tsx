@@ -12,7 +12,7 @@ export function FeatureGrid({ content }: { content: FeatureGridContent }) {
 
   if (isDark) {
     return (
-      <section className="bg-primary py-20 sm:py-28">
+      <section className="overflow-hidden rounded-[2.5rem] bg-primary py-20 sm:py-28">
         <Container>
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
             <Reveal>
