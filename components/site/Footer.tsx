@@ -29,10 +29,10 @@ export async function Footer() {
           ))}
         </nav>
 
-        <p className="mx-auto mt-8 max-w-lg text-white/70">
+        <p className="mx-auto mt-8 max-w-2xl text-white/70">
           Mehmed Super Foods — whole wheat flour, rice, and Rizqan sugarcane juice, supplied
           fresh across Lahore.
-          {settings?.phone && <> Call us at {settings.phone}.</>}
+          {settings?.phone && <> Call us at <span className="whitespace-nowrap">{settings.phone}</span>.</>}
         </p>
 
         {(socialLinks.facebook || socialLinks.instagram) && (
