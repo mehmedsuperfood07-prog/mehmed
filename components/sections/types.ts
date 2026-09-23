@@ -107,12 +107,10 @@ export type QuoteFormContent = {
 };
 
 // A missed section from the template's homepage -- a "trusted by" band of
-// partner/client logos right below the Hero. Content is generic business
-// categories rather than fabricated specific client names, since Mehmed's
-// actual retail customers (small shops, bakeries) don't have logos worth
-// showing and we don't have real named partners to display -- same
-// no-fabrication principle as everywhere else (PLAN.md section 8). Swap in
-// real partner/distributor logos via `image_url` once they exist.
+// partner/client logos right below the Hero. `image_url` set means the
+// carousel renders the logo only (no visible name, per client request);
+// `label` alone (no image_url) falls back to a generic checkmark badge --
+// used for entries where a verified official logo couldn't be sourced.
 export type LogoCarouselContent = {
   heading?: string;
   logos: { label: string; image_url?: string }[];

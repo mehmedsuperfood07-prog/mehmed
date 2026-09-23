@@ -25,15 +25,17 @@ export function LogoCarousel({ content }: { content: LogoCarouselContent }) {
           {track.map((logo, index) => (
             <div key={`${logo.label}-${index}`} className="flex shrink-0 items-center gap-3 px-10">
               {logo.image_url ? (
-                <div className="relative h-9 w-28 shrink-0">
+                <div className="relative h-12 w-32 shrink-0">
                   <Image src={logo.image_url} alt={logo.label} fill className="object-contain object-left" />
                 </div>
               ) : (
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary">
-                  ✓
-                </span>
+                <>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary">
+                    ✓
+                  </span>
+                  <span className="whitespace-nowrap text-lg font-medium text-white">{logo.label}</span>
+                </>
               )}
-              <span className="whitespace-nowrap text-lg font-medium text-white">{logo.label}</span>
             </div>
           ))}
         </div>

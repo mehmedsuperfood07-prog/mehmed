@@ -276,13 +276,24 @@ async function main() {
       {
         type: "logo_carousel",
         content: {
-          heading: "Trusted By",
+          heading: "Our Corporate Clients",
+          // Real client logos, uploaded to Storage's media bucket once (see
+          // git history for the one-off upload script) -- re-running seed
+          // keeps these URLs rather than reverting to generic placeholders.
+          // "Manan Shahid Forging" and "Usman Trader" have no image_url: no
+          // verified official logo could be sourced for them, so the
+          // carousel falls back to the generic checkmark badge for those two.
           logos: [
-            { label: "General Stores" },
-            { label: "Departmental Stores" },
-            { label: "Bakeries" },
-            { label: "Factories & Canteens" },
-            { label: "Distributors" },
+            { label: "Kitchen Cuisine", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/f962e271-5349-431c-8165-6afeec10e7ce.webp" },
+            { label: "Nishat Mills", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/2dfeeb21-60b7-49df-b45c-24897c90bbb9.svg" },
+            { label: "Sapphire", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/8f2b4e0d-daa3-45cd-8551-c198e46bdbcf.svg" },
+            { label: "Fatima Memorial Hospital", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/c6641546-510c-4e20-9c38-7ccbedf012b6.png" },
+            { label: "Manan Shahid Forging" },
+            { label: "Leathertex Group", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/189f92d6-0605-4edb-b0eb-ec8a9112e9f1.png" },
+            { label: "Netsol Technologies", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/b4b20e3a-403e-4730-82cc-23b03a4f86f5.svg" },
+            { label: "Usman Trader" },
+            { label: "Blue World City", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/436ea095-f441-40ae-a8cd-0038ed6b49a7.png" },
+            { label: "Master Sanatory", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/48f0883f-7014-4903-8efe-88728c3199ef.png" },
           ],
         },
       },
