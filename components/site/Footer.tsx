@@ -51,15 +51,17 @@ export async function Footer() {
         )}
 
         {settings?.logo_url ? (
-          <div className="mx-auto mt-10 inline-block rounded-3xl bg-white p-4 sm:p-6">
-            <Image
-              src={settings.logo_url}
-              alt="Mehmed Super Foods"
-              width={320}
-              height={208}
-              className="h-24 w-auto object-contain sm:h-32"
-            />
-          </div>
+          // Real logo now has a transparent background (swapped from an
+          // earlier white-background JPEG that needed a white card behind
+          // it to avoid a visible box on this green band) -- safe to place
+          // directly.
+          <Image
+            src={settings.logo_url}
+            alt="Mehmed Super Foods"
+            width={320}
+            height={208}
+            className="mx-auto mt-10 h-24 w-auto object-contain sm:h-32"
+          />
         ) : (
           <p className="mt-10 text-5xl font-normal tracking-tight sm:text-7xl">
             Mehmed<span className="text-lime">SuperFoods</span>
