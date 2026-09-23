@@ -133,6 +133,11 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
   contact_form: [
     { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     { key: "body", label: "Body", type: "textarea", optional: true },
+    { key: "side_heading", label: "Side panel heading (optional)", type: "text", optional: true },
+    { key: "side_body", label: "Side panel text", type: "textarea", optional: true },
+    { key: "side_items", label: "Side panel checklist (one per line)", type: "list", itemLabel: "Item" },
+    { key: "side_cta_label", label: "Side panel button label", type: "text", optional: true },
+    { key: "side_cta_href", label: "Side panel button link", type: "text", optional: true },
   ],
   quote_form: [
     { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },

@@ -589,6 +589,11 @@ async function main() {
         content: {
           heading: "Send Us a **Message**",
           body: "Fill out the form and we'll get back to you as soon as we can.",
+          side_heading: "How Can We **Help You**?",
+          side_body: "Whether you run a store, bakery or factory canteen, or want your own brand on our flour, our team is happy to help.",
+          side_items: ["Product and pricing enquiries", "Bulk supply for bakeries, factories and canteens", "Private-label flour packing", "Retail and distributor partnerships", "Delivery across Lahore"],
+          side_cta_label: "Become a Retail Partner",
+          side_cta_href: "/become-a-distributor",
         },
       },
       {

@@ -97,6 +97,11 @@ export type GalleryContent = {
 export type ContactFormContent = {
   heading?: string;
   body?: string;
+  side_heading?: string;
+  side_body?: string;
+  side_items?: string[];
+  side_cta_label?: string;
+  side_cta_href?: string;
 };
 
 export type QuoteFormContent = {
