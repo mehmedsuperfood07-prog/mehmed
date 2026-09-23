@@ -83,6 +83,7 @@ export type TestimonialSliderContent = {
 export type CTABannerContent = {
   heading: string;
   body?: string;
+  image_url?: string;
   buttons: { label: string; href: string }[];
 };
 

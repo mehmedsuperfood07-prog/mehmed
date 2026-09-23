@@ -5,15 +5,13 @@ import { renderHeading } from "./Accent";
 import { Button } from "./Button";
 import type { CTABannerContent } from "./types";
 
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1670684684445-a4504dca0bbc?auto=format&fit=crop&w=1800&q=80";
-
+// Solid brand-green band with the text on top; if an image is set (the
+// product line-up), it sits underneath the text at full visibility with its
+// top edge fading into the green -- text is never laid over the products.
 export function CTABanner({ content }: { content: CTABannerContent }) {
   return (
-    <section className="relative overflow-hidden rounded-[2.5rem] py-20 sm:py-28">
-      <Image src={FALLBACK_IMAGE} alt="" fill className="object-cover" />
-      <div className="absolute inset-0 bg-black/55" />
-      <Container className="relative text-center">
+    <section className="relative overflow-hidden rounded-[2.5rem] bg-primary pt-20 sm:pt-28">
+      <Container className={`relative text-center ${content.image_url ? "pb-10 sm:pb-14" : "pb-20 sm:pb-28"}`}>
         <Reveal>
           <h2 className="h2 text-white">{renderHeading(content.heading, "text-lime")}</h2>
           {content.body && (
@@ -32,6 +30,18 @@ export function CTABanner({ content }: { content: CTABannerContent }) {
           </div>
         </Reveal>
       </Container>
+      {content.image_url && (
+        <div className="relative h-56 sm:h-auto sm:aspect-[1200/407]">
+          <Image
+            src={content.image_url}
+            alt="Mehmed product range: Kainat 1121 rice, Rizqan sugarcane juice, Chakki Atta and Super White Atta"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-primary to-transparent" />
+        </div>
+      )}
     </section>
   );
 }

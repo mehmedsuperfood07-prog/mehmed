@@ -95,6 +95,7 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
   cta_banner: [
     { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "body", label: "Body", type: "textarea", optional: true },
+    { key: "image_url", label: "Product image (optional, shown below the text)", type: "image", optional: true },
     {
       key: "buttons",
       label: "Buttons",
