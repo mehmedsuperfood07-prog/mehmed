@@ -12,7 +12,7 @@
 // it to a no-op only for server bundles). A standalone script needs its own
 // client construction instead.
 import { createClient } from "@supabase/supabase-js";
-import type { Database } from "../lib/supabase/types";
+import type { Database, Json } from "../lib/supabase/types";
 
 const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -96,6 +96,38 @@ async function upsertTestimonial(testimonial: {
   if (error) throw error;
 }
 
+// Shown on every page (below the hero on home, near the bottom elsewhere --
+// see withClientCarousel). Not for blog pages.
+const CLIENT_CAROUSEL = {
+  type: "logo_carousel",
+  content: {
+    heading: "Our Corporate Clients",
+    // Real client logos, uploaded to Storage's media bucket once (see
+    // git history for the one-off upload script) -- re-running seed
+    // keeps these URLs rather than reverting to generic placeholders.
+    logos: [
+      { label: "Kitchen Cuisine", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/f962e271-5349-431c-8165-6afeec10e7ce.webp" },
+      { label: "Nishat Mills", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/2dfeeb21-60b7-49df-b45c-24897c90bbb9.svg" },
+      { label: "Sapphire", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/8f2b4e0d-daa3-45cd-8551-c198e46bdbcf.svg" },
+      { label: "Fatima Memorial Hospital", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/c6641546-510c-4e20-9c38-7ccbedf012b6.png" },
+      { label: "Manan Shahid Forging", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/0a45d110-e335-4590-89fa-12b4a189d20d.png" },
+      { label: "Leathertex Group", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/189f92d6-0605-4edb-b0eb-ec8a9112e9f1.png" },
+      { label: "Netsol Technologies", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/b4b20e3a-403e-4730-82cc-23b03a4f86f5.svg" },
+      { label: "Usman Trader", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/05271b88-1432-4578-b4b3-0880e22d6c84.png" },
+      { label: "Blue World City", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/436ea095-f441-40ae-a8cd-0038ed6b49a7.png" },
+      { label: "Master Sanatory", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/48f0883f-7014-4903-8efe-88728c3199ef.png" },
+    ],
+  },
+};
+
+const CAROUSEL_AT_END = new Set(["contact", "faq"]);
+
+function withClientCarousel<T extends { slug: string; sections: { type: string; content: Json }[] }>(page: T) {
+  if (page.slug === "home" || page.sections.some((s) => s.type === "logo_carousel")) return page.sections;
+  const at = CAROUSEL_AT_END.has(page.slug) ? page.sections.length : page.sections.length - 1;
+  return [...page.sections.slice(0, at), CLIENT_CAROUSEL, ...page.sections.slice(at)];
+}
+
 async function upsertPage(page: {
   slug: string;
   title: string;
@@ -145,7 +177,7 @@ async function upsertPage(page: {
     pageId = data.id;
   }
 
-  const rows = page.sections.map((section, index) => ({
+  const rows = withClientCarousel(page).map((section, index) => ({
     page_id: pageId,
     type: section.type,
     position: index,
@@ -300,27 +332,7 @@ async function main() {
           secondary_cta_href: "/become-a-distributor",
         },
       },
-      {
-        type: "logo_carousel",
-        content: {
-          heading: "Our Corporate Clients",
-          // Real client logos, uploaded to Storage's media bucket once (see
-          // git history for the one-off upload script) -- re-running seed
-          // keeps these URLs rather than reverting to generic placeholders.
-          logos: [
-            { label: "Kitchen Cuisine", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/f962e271-5349-431c-8165-6afeec10e7ce.webp" },
-            { label: "Nishat Mills", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/2dfeeb21-60b7-49df-b45c-24897c90bbb9.svg" },
-            { label: "Sapphire", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/8f2b4e0d-daa3-45cd-8551-c198e46bdbcf.svg" },
-            { label: "Fatima Memorial Hospital", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/c6641546-510c-4e20-9c38-7ccbedf012b6.png" },
-            { label: "Manan Shahid Forging", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/0a45d110-e335-4590-89fa-12b4a189d20d.png" },
-            { label: "Leathertex Group", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/189f92d6-0605-4edb-b0eb-ec8a9112e9f1.png" },
-            { label: "Netsol Technologies", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/b4b20e3a-403e-4730-82cc-23b03a4f86f5.svg" },
-            { label: "Usman Trader", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/05271b88-1432-4578-b4b3-0880e22d6c84.png" },
-            { label: "Blue World City", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/436ea095-f441-40ae-a8cd-0038ed6b49a7.png" },
-            { label: "Master Sanatory", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/48f0883f-7014-4903-8efe-88728c3199ef.png" },
-          ],
-        },
-      },
+      CLIENT_CAROUSEL,
       {
         type: "image_with_text",
         content: {
