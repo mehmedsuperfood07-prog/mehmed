@@ -30,10 +30,10 @@ export function Header({ logoUrl }: { logoUrl?: string | null }) {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-6">
-      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-white px-4 py-3 shadow-[0_2px_20px_rgba(0,0,0,0.06)] sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-white px-4 py-2 shadow-[0_2px_20px_rgba(0,0,0,0.06)] sm:px-6">
         <Link href="/" className="flex items-center text-lg font-medium text-ink">
           {logoUrl ? (
-            <Image src={logoUrl} alt="Mehmed Super Foods" width={140} height={40} className="h-9 w-auto object-contain" priority />
+            <Image src={logoUrl} alt="Mehmed Super Foods" width={96} height={96} className="h-12 w-auto object-contain sm:h-16" priority />
           ) : (
             <>
               Mehmed<span className="text-primary">SuperFoods</span>

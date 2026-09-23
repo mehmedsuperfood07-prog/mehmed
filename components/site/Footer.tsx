@@ -60,7 +60,7 @@ export async function Footer() {
             alt="Mehmed Super Foods"
             width={320}
             height={208}
-            className="mx-auto mt-10 h-24 w-auto object-contain sm:h-32"
+            className="mx-auto mt-10 h-32 w-auto object-contain sm:h-44"
           />
         ) : (
           <p className="mt-10 text-5xl font-normal tracking-tight sm:text-7xl">
