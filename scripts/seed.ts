@@ -178,29 +178,56 @@ async function main() {
   });
 
   await upsertProduct({
-    category_id: riceCategoryId,
-    name: "Mehmed Rice",
-    slug: "mehmed-rice",
-    short_description: "Quality rice for everyday meals, carefully sourced and packed by Mehmed.",
+    category_id: flourCategoryId,
+    name: "Mehmed Super White Flour",
+    slug: "mehmed-super-white-flour",
+    short_description: "Finely milled super white flour for soft rotis and everyday cooking.",
     description:
-      "Mehmed Rice is sourced and packed with the same quality standards as our other staples. Full variety and pack-size details coming soon.",
-    pack_sizes: [],
+      "Mehmed Super White Flour is freshly milled for a smooth texture and everyday nutrition, packed hygienically and supplied fresh to shops across Lahore.",
+    pack_sizes: ["5 Kg"],
+    is_featured: true,
+    sort_order: 2,
+  });
+
+  await upsertProduct({
+    category_id: riceCategoryId,
+    name: "Mehmed Kainat 1121 Rice",
+    slug: "mehmed-kainat-1121-rice",
+    short_description: "Premium long-grain Kainat 1121 rice, valued for its length and aroma after cooking.",
+    description:
+      "Mehmed Kainat 1121 Rice is sourced and packed with the same quality standards as our other staples — a premium long-grain variety popular with households and trade buyers alike.",
+    pack_sizes: ["25 Kg"],
     is_featured: true,
     sort_order: 1,
   });
 
   await upsertProduct({
-    category_id: juiceCategoryId,
-    name: "Rizqan Sugarcane Juice — Lemon",
-    slug: "rizqan-sugarcane-juice-lemon",
-    short_description: "100% natural sugarcane juice with a refreshing lemon twist. Fresh, hygienic, nothing added.",
+    category_id: riceCategoryId,
+    name: "Mehmed Super Kernel Basmati Rice",
+    slug: "mehmed-super-kernel-basmati-rice",
+    short_description: "Classic aromatic Super Kernel Basmati rice with a fluffy texture, packed by Mehmed.",
     description:
-      "Rizqan Sugarcane Juice (Lemon) is made fresh and hygienically bottled with no artificial additives — a refreshing, naturally sweet drink for any season.",
-    pack_sizes: ["1L bottle"],
-    is_featured: true,
+      "Mehmed Super Kernel Basmati Rice offers the aroma and grain quality basmati is known for — sourced and packed for everyday households and bulk buyers.",
+    pack_sizes: [],
+    is_featured: false,
     sort_order: 2,
   });
 
+  await upsertProduct({
+    category_id: riceCategoryId,
+    name: "Mehmed Sella Rice",
+    slug: "mehmed-sella-rice",
+    short_description: "Parboiled Sella rice with firm, non-sticky grains for everyday cooking.",
+    description:
+      "Mehmed Sella Rice is parboiled for firm, separate grains — a reliable everyday choice for households, restaurants and bulk kitchens.",
+    pack_sizes: [],
+    is_featured: false,
+    sort_order: 3,
+  });
+
+  // Note: the plain "Lemon" variant was removed via the admin dashboard at
+  // some point (live DB only has Lemon + Mint) -- not re-added here so a
+  // reseed doesn't resurrect a deliberately-deleted product.
   await upsertProduct({
     category_id: juiceCategoryId,
     name: "Rizqan Sugarcane Juice — Lemon + Mint",
@@ -244,7 +271,7 @@ async function main() {
     .from("site_settings")
     .update({
       address: "Lahore, Punjab, Pakistan",
-      phone: "+92 300 0000000",
+      phone: "+92 318 6327908",
       email: "info@mehmedsuperfood.pk",
       opening_hours: "Mon–Sat: 9:00 AM – 7:00 PM",
       coverage_areas: LAHORE_AREAS,
@@ -263,14 +290,14 @@ async function main() {
       {
         type: "hero",
         content: {
-          eyebrow: "Quality Staples, Delivered Fresh",
-          headline: "Quality You Can Taste, **Trust You Can Rely On**",
+          eyebrow: "Quality Food for a Healthier Tomorrow",
+          headline: "Pure Food. **Trusted Quality.** Better Living.",
           subheadline:
-            "Whole wheat flour, rice, and Rizqan sugarcane juice — freshly packed and delivered across Lahore.",
-          primary_cta_label: "View Products",
+            "Discover Mehmed food products created for everyday households, retailers and business partners with a focus on quality, purity and dependable service.",
+          primary_cta_label: "Explore Our Products",
           primary_cta_href: "/products",
-          secondary_cta_label: "Request Bulk Quote",
-          secondary_cta_href: "/contact",
+          secondary_cta_label: "Become a Retail Partner",
+          secondary_cta_href: "/become-a-distributor",
         },
       },
       {
@@ -342,6 +369,20 @@ async function main() {
               title: "Fresh, Additive-Free Juice",
               description: "Rizqan sugarcane juice is bottled fresh with nothing artificial added.",
             },
+          ],
+        },
+      },
+      {
+        type: "feature_grid",
+        content: {
+          heading: "How **We Serve** Our Customers",
+          subheading: "A simple path from browsing to enjoying quality food.",
+          style: "light",
+          features: [
+            { icon: "1️⃣", title: "Select Your Product", description: "Browse the available flour, rice and beverage products." },
+            { icon: "2️⃣", title: "Place Your Order", description: "Contact us, order through the website, or purchase through an authorized retail partner." },
+            { icon: "3️⃣", title: "Fast Delivery", description: "Receive your order through the applicable delivery channel or purchase from a nearby retail outlet." },
+            { icon: "4️⃣", title: "Enjoy With Confidence", description: "Use products prepared and packed with a focus on quality, hygiene and consistency." },
           ],
         },
       },
@@ -444,7 +485,21 @@ async function main() {
         type: "rich_text",
         content: {
           heading: "Our **Story**",
-          body: "Mehmed Super Foods started with a simple goal: bring consistently good whole wheat flour, rice, and refreshing sugarcane juice to shops and businesses across Lahore.\n\nToday, we supply general stores, departmental stores, and bulk buyers like bakeries and factories, with a focus on quality and reliable delivery.",
+          body: "Mehmed Super Food Private Limited is committed to delivering quality food products that combine purity, nutrition and trust. We aim to serve families, retailers and business partners with premium everyday essentials backed by consistent quality and customer-focused service.",
+        },
+      },
+      {
+        type: "rich_text",
+        content: {
+          heading: "Our **Vision**",
+          body: "To become a trusted household name in Pakistan by offering pure, nutritious and high-quality food products that enrich everyday life.",
+        },
+      },
+      {
+        type: "rich_text",
+        content: {
+          heading: "Our **Mission**",
+          body: "To provide safe, fresh and premium food products through responsible sourcing, hygienic processing, attractive packaging and dependable service while building lasting relationships with our customers and trade partners.",
         },
       },
       {
@@ -452,6 +507,21 @@ async function main() {
         content: {
           heading: "Our **Philosophy**",
           body: "We believe staples shouldn't be an afterthought. Every batch is packed with attention to hygiene and quality, whether it's headed to a corner store or a factory kitchen.",
+        },
+      },
+      {
+        type: "feature_grid",
+        content: {
+          heading: "Our **Core Values**",
+          style: "light",
+          features: [
+            { icon: "🌟", title: "Quality", description: "We focus on consistent standards in sourcing, processing and finished products." },
+            { icon: "🤝", title: "Trust", description: "We aim to build long-term relationships through reliability and transparency." },
+            { icon: "💧", title: "Purity", description: "We strive to offer clean, wholesome food products made with carefully selected ingredients." },
+            { icon: "❤️", title: "Customer Care", description: "We listen to our customers and work to provide responsive service and dependable support." },
+            { icon: "💡", title: "Innovation", description: "We continue improving our products, packaging, service and distribution methods." },
+            { icon: "🛡️", title: "Integrity", description: "We conduct our business responsibly and value honest dealing with customers and partners." },
+          ],
         },
       },
       {
@@ -562,6 +632,16 @@ async function main() {
               answer:
                 "Fill out the bulk quote form on the homepage or Products page with your business details, and our team will get in touch to discuss stocking Mehmed products at your store.",
             },
+            {
+              question: "Do you offer private-label / white-label flour packing?",
+              answer:
+                "Yes — we offer private-label flour solutions for retailers, distributors, supermarket chains and institutions who want to sell flour under their own brand. Visit our Private Label page or contact us to discuss your requirements.",
+            },
+            {
+              question: "What quality standards do you follow?",
+              answer:
+                "We focus on careful sourcing, hygienic processing, consistent product standards, and packaging that protects freshness. See our Quality page for details, including certifications as they become available.",
+            },
           ],
         },
       },
@@ -630,6 +710,117 @@ async function main() {
           body: "Tell us about your business and we'll get back to you with next steps.",
           info_heading: "Great Fit For:",
           info_items: ["General Stores", "Departmental Stores", "Bakeries", "Factories & Staff Canteens"],
+        },
+      },
+    ],
+  });
+
+  await upsertPage({
+    slug: "quality",
+    title: "Quality",
+    seo_title: "Quality & Assurance — Mehmed Super Foods",
+    seo_description:
+      "Mehmed Super Foods' approach to sourcing, hygienic processing, quality control and packaging standards.",
+    sections: [
+      {
+        type: "page_header",
+        content: {
+          title: "Quality",
+          heading: "Quality & **Assurance** You Can Trust",
+          body: "We focus on careful sourcing, hygienic handling, consistent product standards and packaging that protects freshness and quality.",
+        },
+      },
+      {
+        type: "feature_grid",
+        content: {
+          heading: "Our **Quality** Commitment",
+          style: "light",
+          features: [
+            { icon: "🌾", title: "Sourcing Standards", description: "Raw materials are sourced with consistent quality and food-safety in mind." },
+            { icon: "⚙️", title: "Hygienic Processing", description: "Milling, packing and bottling are carried out under hygienic, controlled conditions." },
+            { icon: "🔍", title: "Quality Control", description: "Products are checked at multiple stages to maintain consistent standards batch to batch." },
+            { icon: "📦", title: "Packaging Standards", description: "Packaging is designed to protect freshness and quality from our facility to your shelf." },
+          ],
+        },
+      },
+      {
+        type: "rich_text",
+        content: {
+          heading: "Certifications & **Lab Reports**",
+          body: "We're working towards formal food-safety and regulatory certifications for our facility and products. Verified certification marks and laboratory reports will be published here as they become available — we only publish credentials that are current and verified.",
+        },
+      },
+      {
+        type: "cta_banner",
+        content: {
+          heading: "Questions About Our **Quality Process**?",
+          buttons: [
+            { label: "View Products", href: "/products" },
+            { label: "Contact Us", href: "/contact" },
+          ],
+        },
+      },
+    ],
+  });
+
+  await upsertPage({
+    slug: "private-label",
+    title: "Private Label",
+    seo_title: "Private Label Flour Solutions — Mehmed Super Foods",
+    seo_description:
+      "Private-label flour solutions for retailers, supermarket chains, distributors, institutions and companies.",
+    sections: [
+      {
+        type: "page_header",
+        content: {
+          title: "Private Label",
+          heading: "Private-Label **Flour Solutions**",
+          body: "Mehmed Super Food Private Limited offers private-label flour solutions for retailers, supermarket chains, distributors, institutions and companies that want to sell flour under their own brand name.",
+        },
+      },
+      {
+        type: "rich_text",
+        content: {
+          heading: "How It **Works**",
+          body: "We work with business customers to develop and pack flour according to mutually agreed product, quality and packaging requirements, subject to technical feasibility, minimum order quantities and applicable regulatory requirements.",
+        },
+      },
+      {
+        type: "feature_grid",
+        content: {
+          heading: "What We Can **Offer**",
+          style: "light",
+          features: [
+            { icon: "📋", title: "Product Specification", description: "Flour type and agreed product specification based on your target market and requirements." },
+            { icon: "📦", title: "Pack Sizes & Formats", description: "Pack sizes and packaging formats suitable for retail, wholesale or institutional supply." },
+            { icon: "🎨", title: "Custom Branding", description: "Your brand name, logo, colors and packaging artwork." },
+            { icon: "✅", title: "Compliant Labeling", description: "Product labeling and information aligned with applicable food-labeling and regulatory requirements." },
+            { icon: "📝", title: "Agreed Terms", description: "Agreed quality parameters, production quantity and supply schedule." },
+            { icon: "🤝", title: "Ongoing Support", description: "Ongoing supply support for retailers, distributors and corporate customers." },
+          ],
+        },
+      },
+      {
+        type: "feature_grid",
+        content: {
+          heading: "Our **Process**",
+          style: "light",
+          features: [
+            { icon: "1️⃣", title: "Requirement Discussion", description: "You share your flour specification, target market, pack size, branding and expected volume." },
+            { icon: "2️⃣", title: "Product & Commercial Proposal", description: "Specifications, packaging options, minimum order quantity, pricing and supply terms are agreed." },
+            { icon: "3️⃣", title: "Sample / Spec Approval", description: "You review and approve the agreed product standard before commercial production." },
+            { icon: "4️⃣", title: "Packaging & Label Approval", description: "Artwork and mandatory product information are finalized before printing and packing." },
+            { icon: "5️⃣", title: "Production & Supply", description: "Flour is produced, packed and supplied according to the approved specification and agreed schedule." },
+          ],
+        },
+      },
+      {
+        type: "quote_form",
+        content: {
+          heading: "Start a **Private-Label** Conversation",
+          body: "Tell us about your flour requirements and we'll get back to you to discuss specifications, packaging and pricing.",
+          info_heading: "Private Label Is Available For:",
+          info_items: ["Retailers & Supermarket Chains", "Distributors", "Institutions", "Companies & Bulk Buyers"],
         },
       },
     ],

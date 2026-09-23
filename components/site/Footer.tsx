@@ -1,11 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
 const NAV_ITEMS = [
   { href: "/about", label: "About" },
   { href: "/products", label: "Products" },
-  { href: "/become-a-distributor", label: "Distributors" },
+  { href: "/quality", label: "Quality" },
+  { href: "/private-label", label: "Private Label" },
+  { href: "/become-a-distributor", label: "Retail Partners" },
   { href: "/reviews", label: "Reviews" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -46,9 +50,21 @@ export async function Footer() {
           </div>
         )}
 
-        <p className="mt-10 text-5xl font-normal tracking-tight sm:text-7xl">
-          Mehmed<span className="text-lime">SuperFoods</span>
-        </p>
+        {settings?.logo_url ? (
+          <div className="mx-auto mt-10 inline-block rounded-3xl bg-white p-4 sm:p-6">
+            <Image
+              src={settings.logo_url}
+              alt="Mehmed Super Foods"
+              width={320}
+              height={208}
+              className="h-24 w-auto object-contain sm:h-32"
+            />
+          </div>
+        ) : (
+          <p className="mt-10 text-5xl font-normal tracking-tight sm:text-7xl">
+            Mehmed<span className="text-lime">SuperFoods</span>
+          </p>
+        )}
       </div>
       <div className="bg-lime py-3 text-center text-xs text-lime-text">
         © {new Date().getFullYear()} Mehmed Super Foods. All rights reserved.
