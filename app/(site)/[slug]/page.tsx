@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const result = await getPageBySlug(slug);
   if (!result) return {};
-  return pageMetadata(result.page);
+  return pageMetadata(result.page, `/${slug}`);
 }
 
 export default async function DynamicPage({ params }: Params) {

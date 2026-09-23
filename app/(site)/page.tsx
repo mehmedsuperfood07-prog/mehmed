@@ -6,7 +6,7 @@ import { PageSections } from "@/components/sections/PageSections";
 export async function generateMetadata(): Promise<Metadata> {
   const result = await getPageBySlug("home");
   if (!result) return {};
-  return pageMetadata(result.page);
+  return pageMetadata(result.page, "/");
 }
 
 export default async function HomePage() {
