@@ -8,17 +8,17 @@ import Link from "next/link";
 // CLAUDE.md "Current state". Keep in sync with the pages actually seeded.
 const PRIMARY_NAV_ITEMS = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
-  { href: "/quality", label: "Quality" },
-  { href: "/contact", label: "Contact" },
-];
-
-// Secondary pages tucked into a "More" dropdown so the pill nav doesn't
-// grow past what the template's header was ever designed to hold.
-const MORE_NAV_ITEMS = [
+  { href: "/products", label: "Products" },
   { href: "/private-label", label: "Private Label" },
   { href: "/become-a-distributor", label: "Retail Partners" },
+  { href: "/quality", label: "Quality" },
+];
+
+// Remaining pages tucked into a "More" dropdown so the pill nav doesn't
+// grow past what the template's header was ever designed to hold.
+const MORE_NAV_ITEMS = [
+  { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
 ];
 
@@ -41,7 +41,7 @@ export function Header({ logoUrl }: { logoUrl?: string | null }) {
           )}
         </Link>
 
-        <nav className="hidden items-center gap-7 sm:flex">
+        <nav className="hidden items-center gap-5 lg:gap-6 sm:flex">
           {PRIMARY_NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
