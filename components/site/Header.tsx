@@ -33,7 +33,7 @@ export function Header({ logoUrl }: { logoUrl?: string | null }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-white px-4 py-2 shadow-[0_2px_20px_rgba(0,0,0,0.06)] sm:px-6">
         <Link href="/" className="flex items-center text-lg font-medium text-ink">
           {logoUrl ? (
-            <Image src={logoUrl} alt="Mehmed Super Foods" width={316} height={196} className="h-11 w-auto object-contain sm:h-14" priority />
+            <Image src={logoUrl} alt="Mehmed Super Foods" width={243} height={154} className="h-12 w-auto object-contain sm:h-16" priority />
           ) : (
             <>
               Mehmed<span className="text-primary">SuperFoods</span>

@@ -58,9 +58,9 @@ export async function Footer() {
           <Image
             src={settings.logo_url}
             alt="Mehmed Super Foods"
-            width={316}
-            height={196}
-            className="mx-auto mt-10 h-32 w-auto object-contain sm:h-44"
+            width={243}
+            height={154}
+            className="mx-auto mt-10 h-32 w-auto object-contain sm:h-40"
           />
         ) : (
           <p className="mt-10 text-5xl font-normal tracking-tight sm:text-7xl">
