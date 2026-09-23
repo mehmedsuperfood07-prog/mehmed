@@ -58,8 +58,8 @@ export async function Footer() {
           <Image
             src={settings.logo_url}
             alt="Mehmed Super Foods"
-            width={320}
-            height={208}
+            width={316}
+            height={196}
             className="mx-auto mt-10 h-32 w-auto object-contain sm:h-44"
           />
         ) : (
