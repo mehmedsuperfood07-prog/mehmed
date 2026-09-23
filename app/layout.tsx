@@ -19,7 +19,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 const DEFAULT_DESCRIPTION =
-  "Mehmed Super Foods — whole wheat flour, Mehmed Rice, and Rizqan sugarcane juice, supplied across Lahore to general stores, departmental stores, and bulk buyers.";
+  "Mehmed Super Foods — whole wheat flour, Mehmed Rice, and Rizqan sugarcane juice, supplied across Punjab to general stores, departmental stores, and bulk buyers.";
 
 export const metadata: Metadata = {
   // Not using a title.template here: every page's seo_title is stored as

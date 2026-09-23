@@ -84,7 +84,9 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
   coverage_area: [
     { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text" },
     { key: "body", label: "Body", type: "textarea", optional: true },
-    { key: "areas", label: "Areas (one per line)", type: "list", itemLabel: "Area" },
+    { key: "areas", label: "Areas (optional, one per line)", type: "list", itemLabel: "Area" },
+    { key: "cta_label", label: "Button label (optional)", type: "text", optional: true },
+    { key: "cta_href", label: "Button link", type: "text", optional: true },
   ],
   testimonial_slider: [
     { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },

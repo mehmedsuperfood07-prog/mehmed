@@ -56,7 +56,7 @@ export function Hero({ content }: { content: HeroContent }) {
               <p className="flex items-center gap-1.5 text-xs text-ink-soft">
                 <span>📍</span> Delivering To
               </p>
-              <p className="mt-1 text-sm font-medium text-ink">Lahore &amp; Nearby Areas</p>
+              <p className="mt-1 text-sm font-medium text-ink">Across Punjab</p>
             </Reveal>
           </div>
 

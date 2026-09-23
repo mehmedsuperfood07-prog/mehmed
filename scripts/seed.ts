@@ -19,17 +19,6 @@ const supabase = createClient<Database>(
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
-const LAHORE_AREAS = [
-  "Gulberg",
-  "Model Town",
-  "Johar Town",
-  "DHA",
-  "Township",
-  "Shahdara",
-  "Allama Iqbal Town",
-  "Faisal Town",
-];
-
 async function upsertCategory(name: string, slug: string, sortOrder: number) {
   const { data: existing } = await supabase
     .from("product_categories")
@@ -203,7 +192,7 @@ async function main() {
     slug: "mehmed-chakki-atta",
     short_description: "Soft roti for 7 hours — stone-ground whole wheat flour, freshly packed.",
     description:
-      "Mehmed Chakki Atta is stone-ground from quality wheat for a soft, fluffy roti that stays fresh for hours. Packed hygienically and supplied fresh to shops across Lahore.",
+      "Mehmed Chakki Atta is stone-ground from quality wheat for a soft, fluffy roti that stays fresh for hours. Packed hygienically and supplied fresh to shops across Punjab.",
     pack_sizes: ["5kg"],
     is_featured: true,
     sort_order: 1,
@@ -215,7 +204,7 @@ async function main() {
     slug: "mehmed-super-white-flour",
     short_description: "Finely milled super white flour for soft rotis and everyday cooking.",
     description:
-      "Mehmed Super White Flour is freshly milled for a smooth texture and everyday nutrition, packed hygienically and supplied fresh to shops across Lahore.",
+      "Mehmed Super White Flour is freshly milled for a smooth texture and everyday nutrition, packed hygienically and supplied fresh to shops across Punjab.",
     pack_sizes: ["5 Kg"],
     is_featured: true,
     sort_order: 2,
@@ -276,7 +265,7 @@ async function main() {
   await upsertTestimonial({
     author_name: "Imran",
     author_role: "Shopkeeper",
-    area: "Model Town, Lahore",
+    area: "",
     rating: 5,
     quote: "Mehmed's atta has become one of our best sellers — customers keep asking for it by name.",
     sort_order: 1,
@@ -284,7 +273,7 @@ async function main() {
   await upsertTestimonial({
     author_name: "Bilal",
     author_role: "Store Owner",
-    area: "Gulberg, Lahore",
+    area: "",
     rating: 5,
     quote: "Rizqan juice is a hit with customers, and deliveries are always on time.",
     sort_order: 2,
@@ -292,7 +281,7 @@ async function main() {
   await upsertTestimonial({
     author_name: "Ayesha",
     author_role: "Bakery Owner",
-    area: "Township, Lahore",
+    area: "",
     rating: 5,
     quote: "Reliable bulk supply for our bakery, every single week — exactly what we needed.",
     sort_order: 3,
@@ -306,7 +295,7 @@ async function main() {
       phone: "+92 318 6327908",
       email: "info@mehmedsuperfood.pk",
       opening_hours: "Mon–Sat: 9:00 AM – 7:00 PM",
-      coverage_areas: LAHORE_AREAS,
+      coverage_areas: [],
     })
     .eq("id", 1);
 
@@ -317,7 +306,7 @@ async function main() {
     title: "Home",
     seo_title: "Mehmed Super Foods — Whole Wheat Flour, Rice & Rizqan Sugarcane Juice",
     seo_description:
-      "Mehmed Super Foods supplies whole wheat flour, rice, and Rizqan sugarcane juice to general stores, departmental stores, bakeries, and factories across Lahore.",
+      "Mehmed Super Foods supplies whole wheat flour, rice, and Rizqan sugarcane juice to general stores, departmental stores, bakeries, and factories across Punjab.",
     sections: [
       {
         type: "hero",
@@ -337,7 +326,7 @@ async function main() {
         type: "image_with_text",
         content: {
           heading: "A Household Name in **Quality Staples**",
-          body: "Mehmed Super Foods packs and supplies whole wheat flour, rice, and Rizqan sugarcane juice to shops, bakeries, and factories across Lahore — with a focus on quality sourcing and hygienic packing at every step.",
+          body: "Mehmed Super Foods packs and supplies whole wheat flour, rice, and Rizqan sugarcane juice to shops, bakeries, and factories across Punjab — with a focus on quality sourcing and hygienic packing at every step.",
           image_on_right: true,
           cta_label: "More About Us",
           cta_href: "/about",
@@ -371,7 +360,7 @@ async function main() {
             {
               icon: "🚚",
               title: "Reliable Bulk Delivery",
-              description: "Timely delivery across Lahore for both retail and bulk orders.",
+              description: "Timely delivery across Punjab for both retail and bulk orders.",
             },
             {
               icon: "🥤",
@@ -398,9 +387,10 @@ async function main() {
       {
         type: "coverage_area",
         content: {
-          heading: "We **Move with the Flavor** – Where We Deliver",
-          body: "We currently supply general stores, departmental stores, bakeries, and factories across these areas of Lahore — with more added as we grow.",
-          areas: LAHORE_AREAS,
+          heading: "Delivering **Across Punjab**",
+          body: "We supply general stores, departmental stores, bakeries, and factories across Punjab. Tell us where you are and we'll confirm delivery to your location.",
+          cta_label: "Confirm Delivery to Your Area",
+          cta_href: "/contact",
         },
       },
       {
@@ -457,7 +447,7 @@ async function main() {
         content: {
           title: "Our Products",
           heading: "Staples Worth **Stocking**",
-          body: "Whole wheat flour, rice, and Rizqan sugarcane juice — packed fresh for shops, bakeries, and factories across Lahore.",
+          body: "Whole wheat flour, rice, and Rizqan sugarcane juice — packed fresh for shops, bakeries, and factories across Punjab.",
         },
       },
       {
@@ -542,13 +532,18 @@ async function main() {
             { icon: "🌾", title: "Sourcing", description: "Wheat and rice sourced with quality in mind." },
             { icon: "⚙️", title: "Milling & Processing", description: "Processed and packed under hygienic conditions." },
             { icon: "📦", title: "Packing", description: "Sealed and labelled for freshness and consistency." },
-            { icon: "🚚", title: "Distribution", description: "Delivered across Lahore to retail and bulk customers." },
+            { icon: "🚚", title: "Distribution", description: "Delivered across Punjab to retail and bulk customers." },
           ],
         },
       },
       {
         type: "coverage_area",
-        content: { heading: "Where We **Deliver**", areas: LAHORE_AREAS },
+        content: {
+          heading: "Delivering **Across Punjab**",
+          body: "We supply general stores, departmental stores, bakeries, and factories across Punjab. Tell us where you are and we'll confirm delivery to your location.",
+          cta_label: "Confirm Delivery to Your Area",
+          cta_href: "/contact",
+        },
       },
       {
         type: "cta_banner",
@@ -591,14 +586,19 @@ async function main() {
           body: "Fill out the form and we'll get back to you as soon as we can.",
           side_heading: "How Can We **Help You**?",
           side_body: "Whether you run a store, bakery or factory canteen, or want your own brand on our flour, our team is happy to help.",
-          side_items: ["Product and pricing enquiries", "Bulk supply for bakeries, factories and canteens", "Private-label flour packing", "Retail and distributor partnerships", "Delivery across Lahore"],
+          side_items: ["Product and pricing enquiries", "Bulk supply for bakeries, factories and canteens", "Private-label flour packing", "Retail and distributor partnerships", "Delivery across Punjab"],
           side_cta_label: "Become a Retail Partner",
           side_cta_href: "/become-a-distributor",
         },
       },
       {
         type: "coverage_area",
-        content: { heading: "Where We **Deliver**", areas: LAHORE_AREAS },
+        content: {
+          heading: "Delivering **Across Punjab**",
+          body: "We supply general stores, departmental stores, bakeries, and factories across Punjab. Tell us where you are and we'll confirm delivery to your location.",
+          cta_label: "Confirm Delivery to Your Area",
+          cta_href: "/contact",
+        },
       },
     ],
   });
@@ -622,9 +622,9 @@ async function main() {
         content: {
           items: [
             {
-              question: "What areas do you deliver to?",
+              question: "Which areas do you deliver to?",
               answer:
-                "We currently deliver across several areas of Lahore, including Gulberg, Model Town, Johar Town, DHA, Township, Shahdara, Allama Iqbal Town, and Faisal Town. Contact us to confirm delivery to your specific location.",
+                "We supply retail and bulk customers across Punjab. Contact us to confirm delivery to your specific location.",
             },
             {
               question: "Do you supply in bulk to bakeries and factories?",
@@ -666,14 +666,14 @@ async function main() {
     slug: "reviews",
     title: "Reviews",
     seo_title: "Customer Reviews — Mehmed Super Foods",
-    seo_description: "What shopkeepers, bakeries, and factories across Lahore say about Mehmed Super Foods.",
+    seo_description: "What shopkeepers, bakeries, and factories across Punjab say about Mehmed Super Foods.",
     sections: [
       {
         type: "page_header",
         content: {
           title: "Reviews",
           heading: "What Our **Customers Say**",
-          body: "Feedback from shopkeepers, bakeries, and factories we supply across Lahore.",
+          body: "Feedback from shopkeepers, bakeries, and factories we supply across Punjab.",
         },
       },
       {
@@ -695,7 +695,7 @@ async function main() {
     title: "Become a Distributor",
     seo_title: "Become a Distributor — Mehmed Super Foods",
     seo_description:
-      "Become a Mehmed Super Foods stockist or bulk distributor — general stores, departmental stores, bakeries, and factories across Lahore.",
+      "Become a Mehmed Super Foods stockist or bulk distributor — general stores, departmental stores, bakeries, and factories across Punjab.",
     sections: [
       {
         type: "page_header",
@@ -712,7 +712,7 @@ async function main() {
           style: "light",
           features: [
             { icon: "🧼", title: "Hygienically Packed", description: "Every product is packed with hygiene and quality control in mind." },
-            { icon: "🚚", title: "Reliable Delivery", description: "Timely delivery across Lahore for both retail and bulk orders." },
+            { icon: "🚚", title: "Reliable Delivery", description: "Timely delivery across Punjab for both retail and bulk orders." },
             { icon: "🤝", title: "Responsive Support", description: "A dedicated point of contact for bulk and stockist accounts." },
           ],
         },

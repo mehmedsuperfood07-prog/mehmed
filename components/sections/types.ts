@@ -70,7 +70,9 @@ export type ProductGridContent = {
 export type CoverageAreaContent = {
   heading: string;
   body?: string;
-  areas: string[];
+  areas?: string[];
+  cta_label?: string;
+  cta_href?: string;
 };
 
 export type TestimonialSliderContent = {
