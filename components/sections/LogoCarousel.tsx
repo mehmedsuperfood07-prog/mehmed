@@ -12,20 +12,20 @@ export function LogoCarousel({ content }: { content: LogoCarouselContent }) {
   const track = [...content.logos, ...content.logos];
 
   return (
-    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-14">
+    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-7 sm:py-8">
       {content.heading && (
-        <Container className="mb-8 text-center">
+        <Container className="mb-4 text-center">
           <Reveal>
-            <h2 className="text-lg text-white/80">{renderHeading(content.heading, "text-lime")}</h2>
+            <h2 className="text-base text-white/80">{renderHeading(content.heading, "text-lime")}</h2>
           </Reveal>
         </Container>
       )}
       <div className="overflow-hidden">
         <div className="flex w-max animate-marquee items-center">
           {track.map((logo, index) => (
-            <div key={`${logo.label}-${index}`} className="flex shrink-0 items-center gap-3 px-10">
+            <div key={`${logo.label}-${index}`} className="flex shrink-0 items-center gap-3 px-8">
               {logo.image_url ? (
-                <div className="relative h-12 w-32 shrink-0">
+                <div className="relative h-10 w-28 shrink-0">
                   <Image src={logo.image_url} alt={logo.label} fill className="object-contain object-left" />
                 </div>
               ) : (
