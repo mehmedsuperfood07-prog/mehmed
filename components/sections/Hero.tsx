@@ -38,20 +38,12 @@ export function Hero({ content }: { content: HeroContent }) {
             transparently over it. Clearance from the header is padding on
             this content wrapper, not a gap in the section/photo itself. */}
         <Container className="relative flex h-full min-h-[760px] flex-col justify-between gap-8 pt-28 pb-6 sm:min-h-0 sm:gap-0 sm:pt-36 sm:pb-10">
-          {/* Floating widget cards -- see CLAUDE.md for why these replace
-              the template's live avatar/map widgets with static badges. */}
+          {/* Floating widget card -- see CLAUDE.md for why this replaces
+              the template's live avatar/map widgets with a static badge. */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <Reveal className="flex items-center gap-3 self-start rounded-2xl bg-white px-5 py-4 shadow-xl">
-              <span className="text-2xl">🌾</span>
-              <div>
-                <p className="text-sm font-medium text-ink">Soft Roti for 7 Hours</p>
-                <p className="text-xs text-ink-soft">Mehmed Chakki Atta</p>
-              </div>
-            </Reveal>
-
             <Reveal
               delay={0.1}
-              className="self-start rounded-2xl bg-white px-5 py-4 shadow-xl"
+              className="self-start rounded-2xl bg-white px-5 py-4 shadow-xl sm:ml-auto"
             >
               <p className="flex items-center gap-1.5 text-xs text-ink-soft">
                 <span>📍</span> Delivering To
