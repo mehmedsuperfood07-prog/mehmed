@@ -117,7 +117,7 @@ function withClientCarousel<T extends { slug: string; sections: { type: string; 
   return [...page.sections.slice(0, at), CLIENT_CAROUSEL, ...page.sections.slice(at)];
 }
 
-// Product line-up photo (Storage `media` bucket), shown under every CTA banner.
+// Product line-up photo (Storage `media` bucket), CTA banner background.
 const PRODUCT_BANNER_URL =
   "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/brand/e9b47d34-0eac-4ed4-a7c4-f740a2089c60.webp";
 
