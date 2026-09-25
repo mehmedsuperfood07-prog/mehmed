@@ -106,6 +106,8 @@ const CLIENT_CAROUSEL = {
       { label: "Blue World City", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/436ea095-f441-40ae-a8cd-0038ed6b49a7.png" },
       { label: "Master Sanatory", image_url: "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/client-logos/48f0883f-7014-4903-8efe-88728c3199ef.png" },
     ],
+    second_heading: "Trusted By:",
+    second_items: ["General Stores", "Departmental Stores", "Bakeries", "Factories", "Supermarkets", "Wholesalers", "Distributors", "Hotels & Restaurants", "Institutions", "Corporate Canteens"],
   },
 };
 

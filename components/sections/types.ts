@@ -122,6 +122,9 @@ export type QuoteFormContent = {
 export type LogoCarouselContent = {
   heading?: string;
   logos: { label: string; image_url?: string }[];
+  // Optional second, text-only row scrolling the opposite way.
+  second_heading?: string;
+  second_items?: string[];
 };
 
 // The template's actual inner-page hero -- About/Menu/Contact all use this

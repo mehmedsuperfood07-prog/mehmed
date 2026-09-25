@@ -160,6 +160,8 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
         { key: "image_url", label: "Logo image (optional -- shows a placeholder badge if empty)", type: "image", optional: true },
       ],
     },
+    { key: "second_heading", label: "Second row heading (optional)", type: "text", optional: true },
+    { key: "second_items", label: "Second row names (one per line)", type: "list", itemLabel: "Name" },
   ],
   page_header: [
     { key: "title", label: "Title (large text over the photo)", type: "text" },
