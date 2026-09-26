@@ -4,11 +4,12 @@ import { useState } from "react";
 import { updateSiteSettings } from "./actions";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import type { Database } from "@/lib/supabase/types";
+import { SOCIAL_PLATFORMS, type SocialLinks } from "@/lib/social";
 
 type Settings = Database["public"]["Tables"]["site_settings"]["Row"];
 
 export function SettingsForm({ settings }: { settings: Settings }) {
-  const socialLinks = (settings.social_links as { facebook?: string; instagram?: string }) ?? {};
+  const socialLinks = (settings.social_links as SocialLinks) ?? {};
 
   const [form, setForm] = useState({
     logo_url: settings.logo_url ?? "",
@@ -17,8 +18,7 @@ export function SettingsForm({ settings }: { settings: Settings }) {
     email: settings.email ?? "",
     address: settings.address ?? "",
     opening_hours: settings.opening_hours ?? "",
-    facebook: socialLinks.facebook ?? "",
-    instagram: socialLinks.instagram ?? "",
+    social: Object.fromEntries(SOCIAL_PLATFORMS.map((p) => [p.key, socialLinks[p.key] ?? ""])) as Record<string, string>,
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -35,10 +35,9 @@ export function SettingsForm({ settings }: { settings: Settings }) {
       email: form.email || null,
       address: form.address || null,
       opening_hours: form.opening_hours || null,
-      social_links: {
-        ...(form.facebook && { facebook: form.facebook }),
-        ...(form.instagram && { instagram: form.instagram }),
-      },
+      social_links: Object.fromEntries(
+        Object.entries(form.social).filter(([, url]) => url.trim() !== ""),
+      ) as SocialLinks,
     });
     setSaving(false);
     setSaved(true);
@@ -94,22 +93,18 @@ export function SettingsForm({ settings }: { settings: Settings }) {
             className={inputClass}
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-ink">Facebook URL</label>
-          <input
-            value={form.facebook}
-            onChange={(event) => setForm((f) => ({ ...f, facebook: event.target.value }))}
-            className={inputClass}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-ink">Instagram URL</label>
-          <input
-            value={form.instagram}
-            onChange={(event) => setForm((f) => ({ ...f, instagram: event.target.value }))}
-            className={inputClass}
-          />
-        </div>
+        {SOCIAL_PLATFORMS.map((platform) => (
+          <div key={platform.key}>
+            <label className="block text-sm font-medium text-ink">{platform.label} URL</label>
+            <input
+              value={form.social[platform.key]}
+              onChange={(event) =>
+                setForm((f) => ({ ...f, social: { ...f.social, [platform.key]: event.target.value } }))
+              }
+              className={inputClass}
+            />
+          </div>
+        ))}
       </div>
       <div className="flex items-center gap-4 pt-2">
         <button

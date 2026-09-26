@@ -1,5 +1,6 @@
 "use server";
 
+import type { SocialLinks } from "@/lib/social";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
@@ -10,7 +11,7 @@ export type SiteSettingsInput = {
   email: string | null;
   address: string | null;
   opening_hours: string | null;
-  social_links: { facebook?: string; instagram?: string };
+  social_links: SocialLinks;
 };
 
 export async function updateSiteSettings(input: SiteSettingsInput) {

@@ -1,4 +1,5 @@
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import type { SocialLinks } from "@/lib/social";
 
 export function OrganizationSchema({
   logoUrl,
@@ -11,9 +12,9 @@ export function OrganizationSchema({
   phone?: string | null;
   email?: string | null;
   address?: string | null;
-  socialLinks?: { facebook?: string; instagram?: string } | null;
+  socialLinks?: SocialLinks | null;
 }) {
-  const sameAs = [socialLinks?.facebook, socialLinks?.instagram].filter(
+  const sameAs = Object.values(socialLinks ?? {}).filter(
     (url): url is string => Boolean(url),
   );
 
