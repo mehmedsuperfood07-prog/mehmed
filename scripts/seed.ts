@@ -297,7 +297,7 @@ async function main() {
   await supabase
     .from("site_settings")
     .update({
-      address: "Lahore, Punjab, Pakistan",
+      address: "KB Colony, Airport Road, Lahore",
       phone: "+92 318 6327908",
       email: "info@mehmedsuperfood.pk",
       opening_hours: "Mon–Sat: 9:00 AM – 7:00 PM",
