@@ -14,11 +14,11 @@ export function LogoCarousel({ content }: { content: LogoCarouselContent }) {
   const secondTrack = [...secondItems, ...secondItems];
 
   return (
-    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-7 sm:py-8">
+    <section className="overflow-hidden rounded-[2.5rem] bg-primary py-5 sm:py-6">
       {content.heading && (
-        <Container className="mb-4 text-center">
+        <Container className="mb-2 text-center">
           <Reveal>
-            <h2 className="text-base text-white/80">{renderHeading(content.heading, "text-lime")}</h2>
+            <h2 className="text-sm text-white/80">{renderHeading(content.heading, "text-lime")}</h2>
           </Reveal>
         </Container>
       )}
@@ -43,20 +43,20 @@ export function LogoCarousel({ content }: { content: LogoCarouselContent }) {
         </div>
       </div>
       {secondItems.length > 0 && (
-        <div className="mt-5 border-t border-white/15 pt-4">
+        <div className="mt-3 border-t border-white/15 pt-3">
           {content.second_heading && (
-            <Container className="mb-3 text-center">
-              <h2 className="text-base text-white/80">{content.second_heading}</h2>
+            <Container className="mb-2 text-center">
+              <h2 className="text-sm text-white/80">{content.second_heading}</h2>
             </Container>
           )}
           <div className="overflow-hidden">
             <div className="flex w-max animate-marquee-reverse items-center">
               {secondTrack.map((item, index) => (
-                <div key={`${item}-${index}`} className="flex shrink-0 items-center gap-2.5 px-7">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-sm text-primary">
+                <div key={`${item}-${index}`} className="flex shrink-0 items-center gap-2 px-6">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs text-primary">
                     ✓
                   </span>
-                  <span className="whitespace-nowrap text-base font-medium text-white">{item}</span>
+                  <span className="whitespace-nowrap text-sm font-medium text-white">{item}</span>
                 </div>
               ))}
             </div>
