@@ -9,9 +9,9 @@ import { SocialIcon } from "./SocialIcon";
 const NAV_ITEMS = [
   { href: "/about", label: "About" },
   { href: "/products", label: "Products" },
-  { href: "/ration-packs", label: "Ration Packs" },
   { href: "/private-label", label: "Private Label" },
   { href: "/become-a-distributor", label: "Retail Partners" },
+  { href: "/ration-packs", label: "Ration Packs" },
   { href: "/quality", label: "Quality" },
   { href: "/reviews", label: "Reviews" },
   { href: "/faq", label: "FAQ" },

@@ -10,9 +10,9 @@ const PRIMARY_NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/products", label: "Products" },
-  { href: "/ration-packs", label: "Ration Packs" },
   { href: "/private-label", label: "Private Label" },
   { href: "/become-a-distributor", label: "Retail Partners" },
+  { href: "/ration-packs", label: "Ration Packs" },
 ];
 
 // Remaining pages tucked into a "More" dropdown so the pill nav doesn't
