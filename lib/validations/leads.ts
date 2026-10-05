@@ -31,7 +31,7 @@ export const rationPackLeadSchema = z.object({
   packs_per_month: z
     .string()
     .min(1, "Enter the number of packs")
-    .regex(/^[1-9]d{0,6}$/, "Enter a whole number"),
+    .regex(/^[1-9][0-9]{0,6}$/, "Enter a whole number"),
   frequency: z.string().min(1, "Select how often"),
   delivery_location: z.string().min(1, "Delivery location is required"),
   products_interested: z.array(z.string()),
