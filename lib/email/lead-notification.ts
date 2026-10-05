@@ -1,16 +1,17 @@
 import "server-only";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { Database } from "@/lib/supabase/types";
 
 type Lead = Database["public"]["Tables"]["leads"]["Row"];
 
-// No-ops until RESEND_API_KEY is set (see CLAUDE.md "Known open items") --
-// callers should treat this as best-effort and never let it block a lead
-// from being saved. Sender uses Resend's shared onboarding@resend.dev
-// address, which only delivers to the Resend account's own verified email
-// until mehmedsuperfood.pk is verified as a sending domain -- switch the
-// `from` address once that's done.
+const TYPE_LABELS: Record<string, string> = {
+  general: "General inquiry",
+  quote: "Bulk quote request",
+  distributor: "Distributor inquiry",
+  ration_pack: "Ration pack request",
+};
+
 const DETAIL_LABELS: Record<string, string> = {
   packs_per_month: "Packs per month",
   frequency: "Frequency",
@@ -22,9 +23,15 @@ function detailLines(details: Lead["details"]) {
   return Object.entries(details).map(([key, value]) => `${DETAIL_LABELS[key] ?? key}: ${String(value)}`);
 }
 
+// Sends through the business mailbox's SMTP (Hostinger by default). No-ops
+// until SMTP_USER and SMTP_PASSWORD are set, and never throws -- callers
+// rely on the lead already being saved, so a mail failure must not surface
+// to the visitor. Timeouts are short so a slow mail server can't hang the
+// form submission.
 export async function sendLeadNotification(lead: Lead) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASSWORD;
+  if (!user || !pass) return;
 
   try {
     const supabase = createAdminClient();
@@ -34,17 +41,25 @@ export async function sendLeadNotification(lead: Lead) {
       .eq("id", 1)
       .maybeSingle();
 
-    const to = settings?.email;
-    if (!to) return;
+    const to = process.env.LEAD_NOTIFY_TO || settings?.email || user;
+    const port = Number(process.env.SMTP_PORT ?? 465);
 
-    const resend = new Resend(apiKey);
-    const typeLabel = { general: "General inquiry", quote: "Bulk quote request", distributor: "Distributor inquiry", ration_pack: "Ration pack request" }[
-      lead.type
-    ] ?? lead.type;
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST ?? "smtp.hostinger.com",
+      port,
+      secure: port === 465,
+      auth: { user, pass },
+      connectionTimeout: 8000,
+      greetingTimeout: 8000,
+      socketTimeout: 10000,
+    });
 
-    await resend.emails.send({
-      from: "Mehmed Super Foods <onboarding@resend.dev>",
+    const typeLabel = TYPE_LABELS[lead.type] ?? lead.type;
+
+    await transporter.sendMail({
+      from: `"Mehmed Super Foods Website" <${user}>`,
       to,
+      replyTo: lead.email || undefined,
       subject: `${typeLabel} from ${lead.name}${lead.business_name ? ` (${lead.business_name})` : ""}`,
       text: [
         `Type: ${typeLabel}`,
@@ -58,13 +73,12 @@ export async function sendLeadNotification(lead: Lead) {
         lead.products_interested.length > 0 && `Products: ${lead.products_interested.join(", ")}`,
         lead.message && `Message: ${lead.message}`,
         "",
-        "View and manage this lead in the dashboard at /admin/leads.",
+        "View and manage this lead in the dashboard: https://www.mehmedsuperfood.pk/admin/leads",
       ]
         .filter(Boolean)
         .join("\n"),
     });
   } catch {
-    // Best-effort only -- the lead is already saved regardless of whether
-    // the notification email succeeds.
+    // Best-effort only -- the lead is already saved.
   }
 }

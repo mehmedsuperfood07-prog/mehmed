@@ -26,7 +26,7 @@ Next.js (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres/Auth/Stora
 
 Two items from the original plan are deliberately deferred, not forgotten: **shadcn/ui** was skipped so far because plain Tailwind markup covered every form/dialog/accordion built to date without the extra dependency — reconsider it if a real need shows up (e.g. a genuinely complex dialog). **Tiptap** is still the right call for the Blog editor (Phase 5, not built yet); page-section rich text uses a plain textarea split on blank lines instead, which is enough for section copy but not a real editor.
 
-**Resend is wired up** (`lib/email/resend.ts`, called from `submitLead`) but no-ops until `RESEND_API_KEY` is set — leads always save regardless of whether the email sends, and a Resend failure is swallowed (never surfaces to the visitor or blocks the lead). Once the client has a Resend account: set the key, and note the `from` address is still Resend's shared `onboarding@resend.dev`, which only delivers to the Resend account's own verified email until `mehmedsuperfood.pk` is verified as a sending domain — swap the `from` address at that point.
+**Lead notification email goes through the business mailbox over SMTP** (`lib/email/lead-notification.ts`, nodemailer, called from `submitLead`; Resend was removed). It no-ops until `SMTP_USER` + `SMTP_PASSWORD` are set (host/port default to `smtp.hostinger.com`/465; optional `LEAD_NOTIFY_TO` overrides the recipient, which otherwise is `site_settings.email`). Leads always save regardless of whether the email sends, and a mail failure is swallowed (never surfaces to the visitor or blocks the lead). Reply-To is the visitor's email when they gave one. Because it sends from the real mailbox, it aligns with the domain's existing Hostinger SPF/DKIM records.
 
 Image uploads go through Supabase **Storage**, not a third-party service: a public `media` bucket (see `supabase/migrations/20260906180000_storage_media_bucket.sql`) with RLS-equivalent storage policies (public read, authenticated write) — same admin-only-write model as everything else.
 
@@ -67,7 +67,8 @@ Values come from the Supabase/Vercel projects created under the business Gmail a
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=      # server-only, never exposed to client
-RESEND_API_KEY=
+SMTP_USER=                       # business mailbox, e.g. info@mehmedsuperfood.pk
+SMTP_PASSWORD=                   # that mailbox password -- secret, Vercel env only
 ADMIN_ALLOWED_EMAILS=            # comma-separated allow-list for dashboard login
 ```
 

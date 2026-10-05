@@ -2,7 +2,7 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { leadInputSchema, type LeadInput } from "@/lib/validations/leads";
-import { sendLeadNotification } from "@/lib/email/resend";
+import { sendLeadNotification } from "@/lib/email/lead-notification";
 
 // Every lead form (general contact, bulk quote, and future distributor
 // signup) goes through this one action -- see CLAUDE.md "Working
