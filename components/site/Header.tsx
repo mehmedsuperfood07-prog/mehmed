@@ -10,14 +10,15 @@ const PRIMARY_NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/products", label: "Products" },
+  { href: "/ration-packs", label: "Ration Packs" },
   { href: "/private-label", label: "Private Label" },
   { href: "/become-a-distributor", label: "Retail Partners" },
-  { href: "/quality", label: "Quality" },
 ];
 
 // Remaining pages tucked into a "More" dropdown so the pill nav doesn't
 // grow past what the template's header was ever designed to hold.
 const MORE_NAV_ITEMS = [
+  { href: "/quality", label: "Quality" },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
 ];

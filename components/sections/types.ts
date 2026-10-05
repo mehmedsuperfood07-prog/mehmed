@@ -108,6 +108,7 @@ export type ContactFormContent = {
 };
 
 export type QuoteFormContent = {
+  variant?: "quote" | "ration_pack";
   heading?: string;
   body?: string;
   info_heading?: string;

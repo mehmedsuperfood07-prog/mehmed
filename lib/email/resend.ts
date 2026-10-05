@@ -11,6 +11,17 @@ type Lead = Database["public"]["Tables"]["leads"]["Row"];
 // address, which only delivers to the Resend account's own verified email
 // until mehmedsuperfood.pk is verified as a sending domain -- switch the
 // `from` address once that's done.
+const DETAIL_LABELS: Record<string, string> = {
+  packs_per_month: "Packs per month",
+  frequency: "Frequency",
+  delivery_location: "Delivery location",
+};
+
+function detailLines(details: Lead["details"]) {
+  if (!details || typeof details !== "object" || Array.isArray(details)) return [];
+  return Object.entries(details).map(([key, value]) => `${DETAIL_LABELS[key] ?? key}: ${String(value)}`);
+}
+
 export async function sendLeadNotification(lead: Lead) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return;
@@ -27,7 +38,7 @@ export async function sendLeadNotification(lead: Lead) {
     if (!to) return;
 
     const resend = new Resend(apiKey);
-    const typeLabel = { general: "General inquiry", quote: "Bulk quote request", distributor: "Distributor inquiry" }[
+    const typeLabel = { general: "General inquiry", quote: "Bulk quote request", distributor: "Distributor inquiry", ration_pack: "Ration pack request" }[
       lead.type
     ] ?? lead.type;
 
@@ -43,6 +54,7 @@ export async function sendLeadNotification(lead: Lead) {
         lead.email && `Email: ${lead.email}`,
         lead.city && `City: ${lead.city}`,
         lead.business_type && `Business type: ${lead.business_type}`,
+        ...detailLines(lead.details),
         lead.products_interested.length > 0 && `Products: ${lead.products_interested.join(", ")}`,
         lead.message && `Message: ${lead.message}`,
         "",

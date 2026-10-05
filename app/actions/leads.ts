@@ -33,6 +33,14 @@ export async function submitLead(
       city: "city" in data ? data.city : null,
       business_type: "business_type" in data ? data.business_type : null,
       products_interested: "products_interested" in data ? data.products_interested : [],
+      details:
+        data.type === "ration_pack"
+          ? {
+              packs_per_month: data.packs_per_month,
+              frequency: data.frequency,
+              delivery_location: data.delivery_location,
+            }
+          : null,
     })
     .select()
     .single();

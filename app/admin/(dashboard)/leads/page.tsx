@@ -2,6 +2,24 @@ import { createClient } from "@/lib/supabase/server";
 import { LeadStatusSelect } from "./lead-status-select";
 import type { LeadStatus } from "./actions";
 
+const TYPE_LABELS: Record<string, string> = {
+  general: "General",
+  quote: "Quote",
+  distributor: "Distributor",
+  ration_pack: "Ration pack",
+};
+
+const DETAIL_LABELS: Record<string, string> = {
+  packs_per_month: "Packs / month",
+  frequency: "Frequency",
+  delivery_location: "Delivery to",
+};
+
+function leadDetails(details: unknown): [string, string][] {
+  if (!details || typeof details !== "object" || Array.isArray(details)) return [];
+  return Object.entries(details).map(([key, value]) => [DETAIL_LABELS[key] ?? key, String(value)]);
+}
+
 export default async function AdminLeadsPage() {
   const supabase = await createClient();
   const { data: leads, error } = await supabase
@@ -49,7 +67,7 @@ export default async function AdminLeadsPage() {
                   <td className="whitespace-nowrap px-4 py-3 text-ink/60">
                     {new Date(lead.created_at).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-3 capitalize text-ink/80">{lead.type}</td>
+                  <td className="px-4 py-3 text-ink/80">{TYPE_LABELS[lead.type] ?? lead.type}</td>
                   <td className="px-4 py-3 text-ink">
                     <div>{lead.name}</div>
                     {lead.business_name && (
@@ -61,7 +79,19 @@ export default async function AdminLeadsPage() {
                     {lead.email && <div className="text-xs text-ink/50">{lead.email}</div>}
                   </td>
                   <td className="px-4 py-3 text-ink/80">{lead.city ?? "—"}</td>
-                  <td className="max-w-xs px-4 py-3 text-ink/70">{lead.message ?? "—"}</td>
+                  <td className="max-w-xs px-4 py-3 text-ink/70">
+                    {leadDetails(lead.details).map(([label, value]) => (
+                      <div key={label} className="text-xs text-ink/60">
+                        <span className="text-ink/40">{label}:</span> {value}
+                      </div>
+                    ))}
+                    {lead.products_interested.length > 0 && lead.type === "ration_pack" && (
+                      <div className="text-xs text-ink/60">
+                        <span className="text-ink/40">Items:</span> {lead.products_interested.join(", ")}
+                      </div>
+                    )}
+                    <div className={lead.details ? "mt-1" : ""}>{lead.message ?? (lead.details ? "" : "—")}</div>
+                  </td>
                   <td className="px-4 py-3">
                     <LeadStatusSelect id={lead.id} status={lead.status as LeadStatus} />
                   </td>

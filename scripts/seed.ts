@@ -13,6 +13,12 @@
 // client construction instead.
 import { createClient } from "@supabase/supabase-js";
 import type { Database, Json } from "../lib/supabase/types";
+import {
+  HOME_RATION_TEASER,
+  RATION_PAGE,
+  RATION_SECTIONS_AFTER_CAROUSEL,
+  RATION_SECTIONS_BEFORE_CAROUSEL,
+} from "./ration-packs-content";
 
 const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -115,7 +121,11 @@ const CAROUSEL_AT_END = new Set(["contact", "faq"]);
 
 function withClientCarousel<T extends { slug: string; sections: { type: string; content: Json }[] }>(page: T) {
   if (page.slug === "home" || page.sections.some((s) => s.type === "logo_carousel")) return page.sections;
-  const at = CAROUSEL_AT_END.has(page.slug) ? page.sections.length : page.sections.length - 1;
+  const at = CAROUSEL_AT_END.has(page.slug)
+    ? page.sections.length
+    : page.slug === "ration-packs"
+      ? page.sections.length - 2
+      : page.sections.length - 1;
   return [...page.sections.slice(0, at), CLIENT_CAROUSEL, ...page.sections.slice(at)];
 }
 
@@ -346,6 +356,7 @@ async function main() {
           featured_only: true,
         },
       },
+      HOME_RATION_TEASER,
       {
         type: "feature_grid",
         content: {
@@ -848,6 +859,11 @@ async function main() {
         },
       },
     ],
+  });
+
+  await upsertPage({
+    ...RATION_PAGE,
+    sections: [...RATION_SECTIONS_BEFORE_CAROUSEL, ...RATION_SECTIONS_AFTER_CAROUSEL],
   });
 
   console.log("Done.");

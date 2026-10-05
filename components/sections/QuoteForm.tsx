@@ -3,6 +3,7 @@ import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { renderHeading } from "./Accent";
 import { QuoteFormFields } from "./QuoteFormFields";
+import { RationPackFormFields } from "./RationPackFormFields";
 import type { QuoteFormContent } from "./types";
 
 export async function QuoteForm({ content }: { content: QuoteFormContent }) {
@@ -18,7 +19,7 @@ export async function QuoteForm({ content }: { content: QuoteFormContent }) {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           <Reveal>
             <p className="mb-3 text-sm font-medium uppercase tracking-wide text-primary">
-              Get a Quote
+              {content.variant === "ration_pack" ? "Ration Pack Request" : "Get a Quote"}
             </p>
             {content.heading && <h2 className="h2 text-ink">{renderHeading(content.heading)}</h2>}
             {content.body && <p className="mt-4 max-w-md text-ink-soft">{content.body}</p>}
@@ -41,7 +42,11 @@ export async function QuoteForm({ content }: { content: QuoteFormContent }) {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <QuoteFormFields categories={categories?.map((c) => c.name) ?? []} />
+            {content.variant === "ration_pack" ? (
+              <RationPackFormFields />
+            ) : (
+              <QuoteFormFields categories={categories?.map((c) => c.name) ?? []} />
+            )}
           </Reveal>
         </div>
       </Container>

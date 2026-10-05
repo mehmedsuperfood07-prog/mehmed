@@ -143,6 +143,7 @@ export const SECTION_FIELD_SCHEMAS: Record<SectionType, FieldSchema[]> = {
     { key: "side_cta_href", label: "Side panel button link", type: "text", optional: true },
   ],
   quote_form: [
+    { key: "variant", label: "Form type", type: "select", options: ["quote", "ration_pack"] },
     { key: "heading", label: `Heading (${HEADING_HINT})`, type: "text", optional: true },
     { key: "body", label: "Body", type: "textarea", optional: true },
     { key: "info_heading", label: "Info card heading", type: "text", optional: true },

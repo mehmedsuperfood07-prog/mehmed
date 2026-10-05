@@ -68,6 +68,7 @@ export type Database = {
           business_type: string | null
           city: string | null
           created_at: string
+          details: Json | null
           email: string | null
           id: string
           message: string | null
@@ -82,6 +83,7 @@ export type Database = {
           business_type?: string | null
           city?: string | null
           created_at?: string
+          details?: Json | null
           email?: string | null
           id?: string
           message?: string | null
@@ -96,6 +98,7 @@ export type Database = {
           business_type?: string | null
           city?: string | null
           created_at?: string
+          details?: Json | null
           email?: string | null
           id?: string
           message?: string | null
