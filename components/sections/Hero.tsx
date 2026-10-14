@@ -3,6 +3,7 @@ import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { renderHeading } from "./Accent";
 import { Button } from "./Button";
+import { HeroVideo } from "./HeroVideo";
 import type { HeroContent } from "./types";
 
 const FALLBACK_IMAGE =
@@ -15,6 +16,8 @@ export function Hero({ content }: { content: HeroContent }) {
     subheadline,
     body,
     image_url,
+    video_url,
+    video_mobile_url,
     primary_cta_label,
     primary_cta_href,
     secondary_cta_label,
@@ -31,6 +34,9 @@ export function Hero({ content }: { content: HeroContent }) {
           priority
           className="object-cover"
         />
+        {(video_url || video_mobile_url) && (
+          <HeroVideo desktopSrc={video_url || undefined} mobileSrc={video_mobile_url || undefined} />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
 
         {/* Photo fills the section all the way to the top -- the header

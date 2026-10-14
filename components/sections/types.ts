@@ -29,6 +29,8 @@ export type HeroContent = {
   subheadline?: string;
   body?: string;
   image_url?: string;
+  video_url?: string;
+  video_mobile_url?: string;
   primary_cta_label?: string;
   primary_cta_href?: string;
   secondary_cta_label?: string;
@@ -182,6 +184,7 @@ export type FieldSchema =
   | { key: string; label: string; type: "text"; optional?: boolean }
   | { key: string; label: string; type: "textarea"; optional?: boolean }
   | { key: string; label: string; type: "image"; optional?: boolean }
+  | { key: string; label: string; type: "video"; optional?: boolean }
   | { key: string; label: string; type: "boolean" }
   | { key: string; label: string; type: "select"; options: string[] }
   | { key: string; label: string; type: "list"; itemLabel: string }

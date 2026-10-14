@@ -2,6 +2,7 @@
 
 import type { FieldSchema } from "@/components/sections/types";
 import { ImageUploadField } from "./ImageUploadField";
+import { VideoUploadField } from "./VideoUploadField";
 
 type ContentValue = Record<string, unknown>;
 
@@ -32,6 +33,17 @@ export function SectionEditorFields({
         if (field.type === "image") {
           return (
             <ImageUploadField
+              key={field.key}
+              label={field.label}
+              value={(value as string) ?? ""}
+              onChange={(url) => setField(field.key, url)}
+            />
+          );
+        }
+
+        if (field.type === "video") {
+          return (
+            <VideoUploadField
               key={field.key}
               label={field.label}
               value={(value as string) ?? ""}
