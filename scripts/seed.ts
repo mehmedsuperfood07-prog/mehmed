@@ -331,6 +331,10 @@ async function main() {
           headline: "Pure Food. **Trusted Quality.** Better Living.",
           subheadline:
             "Discover Mehmed food products created for everyday households, retailers and business partners with a focus on quality, purity and dependable service.",
+          video_url:
+            "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/video/df2265c5-986f-40e9-b271-53f7cb98ee8c.mp4",
+          video_mobile_url:
+            "https://afyliettjdyjcavbaqgg.supabase.co/storage/v1/object/public/media/video/79dd4f0e-7eba-4dd5-8f37-7002473254b7.mp4",
           primary_cta_label: "Explore Our Products",
           primary_cta_href: "/products",
           secondary_cta_label: "Become a Retail Partner",

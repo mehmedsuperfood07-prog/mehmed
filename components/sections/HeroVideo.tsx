@@ -46,12 +46,23 @@ export function HeroVideo({ desktopSrc, mobileSrc }: { desktopSrc?: string; mobi
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !src) return;
+    // The video can reach "can play" before React attaches onCanPlay (it is
+    // often already cached), so also check the current state and listen
+    // directly, otherwise it would stay faded out while playing.
+    const markReady = () => setReady(true);
+    if (video.readyState >= 3) markReady();
+    video.addEventListener("canplay", markReady);
+    video.addEventListener("playing", markReady);
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) video.play().catch(() => {});
       else video.pause();
     });
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      video.removeEventListener("canplay", markReady);
+      video.removeEventListener("playing", markReady);
+    };
   }, [src]);
 
   if (!src) return null;
@@ -67,7 +78,6 @@ export function HeroVideo({ desktopSrc, mobileSrc }: { desktopSrc?: string; mobi
       preload="auto"
       aria-hidden="true"
       tabIndex={-1}
-      onCanPlay={() => setReady(true)}
       className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
         ready ? "opacity-100" : "opacity-0"
       }`}
