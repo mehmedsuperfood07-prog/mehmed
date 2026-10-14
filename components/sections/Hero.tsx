@@ -37,7 +37,13 @@ export function Hero({ content }: { content: HeroContent }) {
         {(video_url || video_mobile_url) && (
           <HeroVideo desktopSrc={video_url || undefined} mobileSrc={video_mobile_url || undefined} />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-t ${
+            video_url || video_mobile_url
+              ? "from-black/80 via-black/50 to-black/35"
+              : "from-black/70 via-black/20 to-black/10"
+          }`}
+        />
 
         {/* Photo fills the section all the way to the top -- the header
             (rendered by the (site) layout, position: absolute) floats
